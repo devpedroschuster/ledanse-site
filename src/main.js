@@ -16,31 +16,38 @@ if (contactForm) {
     contactForm.addEventListener('submit', (e) => {
         e.preventDefault();
 
+        // 1. VERIFICAÇÃO DO RECAPTCHA
+        const recaptchaResponse = grecaptcha.getResponse();
+        
+        if (!recaptchaResponse) {
+            alert('⚠️ Por favor, confirme que você não é um robô clicando na caixa.');
+            return; // Para tudo e não envia
+        }
+
         const btn = contactForm.querySelector('button[type="submit"]');
         const originalText = btn.textContent;
 
-
         btn.textContent = 'Enviando...';
         btn.disabled = true;
-
 
         const templateParams = {
             nome: document.getElementById('nome').value,
             email: document.getElementById('email').value,
             telefone: document.getElementById('telefone').value,
             tipo_evento: document.getElementById('tipo-evento').value,
-            mensagem: document.getElementById('mensagem').value
+            mensagem: document.getElementById('mensagem').value,
+            'g-recaptcha-response': recaptchaResponse // O EmailJS procura por essa chave exata!
         };
-
 
         emailjs.send(SERVICE_ID, TEMPLATE_ID, templateParams)
             .then(() => {
                 alert('✅ Mensagem enviada com sucesso! Em breve entraremos em contato.');
                 contactForm.reset();
+                grecaptcha.reset(); // Limpa o captcha para um novo envio
             })
             .catch((error) => {
                 console.error('Erro ao enviar email:', error);
-                alert('❌ Ocorreu um erro ao enviar. Por favor, tente novamente ou chame no WhatsApp.');
+                alert('❌ Ocorreu um erro ao enviar. Tente novamente.');
             })
             .finally(() => {
                 btn.textContent = originalText;
