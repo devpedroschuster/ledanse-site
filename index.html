@@ -2,43 +2,86 @@
 <html lang="pt-BR">
   <head>
     <meta charset="UTF-8" />
-
-<script async src="https://www.googletagmanager.com/gtag/js?id=G-66DV98JQZG"></script>
-<script>
-  window.dataLayer = window.dataLayer || [];
-  function gtag(){dataLayer.push(arguments);}
-  gtag('js', new Date());
-
-  gtag('config', 'G-66DV98JQZG');
-</script>
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     
-    <title>LeDanse | Coreografias para Eventos</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link rel="preconnect" href="https://graph.instagram.com">
+    <link rel="preconnect" href="https://www.google.com">
+    
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-66DV98JQZG"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+      gtag('config', 'G-66DV98JQZG');
+    </script>
+
+    <title>LeDanse | Coreografias para Casamentos e 15 Anos em Porto Alegre</title>
+    <meta name="description" content="Especialistas em coreografias personalizadas para casamentos, 15 anos e formaturas em Porto Alegre, RS. Aulas com professoras licenciadas em Dança." />
+    <meta name="keywords" content="dança dos noivos, coreografia casamento, valsa 15 anos, abertura de pista, professor de dança porto alegre, flashmob" />
+    <meta name="author" content="LeDanse Eventos" />
+    <meta name="robots" content="index, follow" />
+    <link rel="canonical" href="https://ledanse.com.br/" />
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
 
-    <meta name="description" content="Coreografias personalizadas para casamentos, 15 anos e formaturas em Porto Alegre. Torne seu evento inesquecível com a LeDanse." />
-    <meta name="keywords" content="dança, coreografia, casamento, 15 anos, formatura, porto alegre, valsa maluca, abertura de pista" />
-    <meta name="author" content="LeDanse Eventos" />
+    <meta property="og:type" content="business.business" />
+    <meta property="og:url" content="https://ledanse.com.br/" /> 
+    <meta property="og:title" content="LeDanse - Coreografias Inesquecíveis" />
+    <meta property="og:description" content="Transforme sua festa com coreografias exclusivas. Casamentos, 15 Anos e Formaturas em Porto Alegre." />
+    <meta property="og:image" content="https://ledanse.com.br/dupla.webp" />
+    <meta property="og:image:alt" content="Danielle e Aléxia, coreógrafas da LeDanse" />
+    <meta property="og:locale" content="pt_BR" />
+    <meta property="og:site_name" content="LeDanse" />
 
-    <meta property="og:type" content="website" />
-    <meta property="og:url" content="https://ledanse.com.br/" /> <meta property="og:title" content="LeDanse - Coreografias para Eventos" />
-    <meta property="og:description" content="Transforme sua festa com coreografias exclusivas. Casamentos, 15 Anos e Formaturas." />
-    <meta property="og:image" content="/dupla.jpg" /> <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "LocalBusiness",
+      "name": "LeDanse Coreografias",
+      "image": "https://ledanse.com.br/dupla.webp",
+      "telephone": "+5551999598622",
+      "email": "ledanseeventos@gmail.com",
+      "address": {
+        "@type": "PostalAddress",
+        "addressLocality": "Porto Alegre",
+        "addressRegion": "RS",
+        "addressCountry": "BR"
+      },
+      "url": "https://ledansecoreografias.com.br",
+      "sameAs": [
+        "https://www.instagram.com/ledansecoreografias",
+        "https://www.facebook.com/ledansecoreografias"
+      ],
+      "priceRange": "$$",
+      "description": "Empresa especializada em coreografias para eventos, casamentos e 15 anos em Porto Alegre."
+    }
+    </script>
+
     <link href="https://fonts.googleapis.com/css2?family=Ubuntu:wght@300;400;500;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
-    
     <link rel="stylesheet" href="src/style.css">
-    <script src="https://www.google.com/recaptcha/api.js" async defer></script>
+
+    <script src="https://unpkg.com/smoothscroll-polyfill/dist/smoothscroll.min.js"></script>
+    <script>smoothscroll.polyfill();</script>
+
+    <script src="https://www.google.com/recaptcha/api.js?render=SUA_NOVA_CHAVE_V3_AQUI"></script>
   </head>
   <body>
+    <a href="#main-content" class="skip-link">Pular para o conteúdo principal</a>
+
     <div id="app">
       
       <header class="header">
-        <nav class="nav-container">
+        <nav class="nav-container" aria-label="Menu Principal">
           <div class="logo">
-    LeDanse <span class="logo-subtitle">Coreografias para Eventos</span>
-</div>
+            LeDanse <span class="logo-subtitle">Coreografias para Eventos</span>
+          </div>
+          
+          <button class="mobile-menu-btn" aria-label="Abrir Menu de Navegação" aria-expanded="false">
+            <i class="fas fa-bars" aria-hidden="true"></i>
+          </button>
+
           <ul class="nav-menu">
             <li><a href="#home">Home</a></li>
             <li><a href="#servicos">Serviços</a></li>
@@ -49,164 +92,168 @@
         </nav>
       </header>
 
-      <section id="home" class="hero">
-        <video autoplay muted loop playsinline class="hero-video">
-            <source src="/pista_rafa.mp4" type="video/mp4">
-            Seu navegador não suporta vídeos HTML5.
-        </video>
-        <div class="hero-overlay"></div>
+      <main id="main-content">
 
-        <div class="hero-content">
-          <h1>Tornando seu evento <br><span class="text-gradient">ainda mais especial!</span></h1>
-          <p>Coreografias personalizadas para casamentos, formaturas e 15 anos. Duas mulheres, muita arte e a dança que você sonha.</p>
-          <div class="cta-group">
-            <button id="btn-whatsapp">Falar no WhatsApp</button>
-            <a href="#servicos" class="link-secondary">Ver Serviços</a>
+        <section id="home" class="hero">
+          <video autoplay muted loop playsinline class="hero-video" poster="/poster.webp" preload="metadata">
+              <source src="/pista_rafa.mp4" type="video/mp4">
+              Seu navegador não suporta vídeos HTML5.
+          </video>
+          <div class="hero-overlay"></div>
+
+          <div class="hero-content">
+            <h1>Tornando seu evento <br><span class="text-gradient">ainda mais especial!</span></h1>
+            <p>Coreografias personalizadas para casamentos, formaturas e 15 anos. Duas mulheres, muita arte e a dança que você sonha.</p>
+            <div class="cta-group">
+              <button id="btn-whatsapp" aria-label="Conversar no WhatsApp">Falar no WhatsApp</button>
+              <a href="#servicos" class="link-secondary">Ver Serviços</a>
+            </div>
           </div>
-        </div>
-      </section>
+        </section>
 
-      <section id="servicos" class="section">
-        <h2 class="section-title">O que fazemos</h2>
-        <div class="services-grid">
-            <div class="service-card">
-                <div class="service-icon"><i class="fas fa-ring"></i></div>
-                <h3>Casamentos</h3>
-                <p>Primeira dança, dança com os pais ou padrinhos. Do clássico ao moderno.</p>
-                <a href="#contato" class="btn-service">Saiba Mais</a>
-            </div>
-            <div class="service-card featured">
-                <div class="featured-badge">Mais Pedido</div>
-                <div class="service-icon"><i class="fas fa-crown"></i></div>
-                <h3>15 Anos & Formaturas</h3>
-                <p>Aberturas de pista incríveis para grupos ou solo. Surpreenda seus convidados!</p>
-                <a href="#contato" class="btn-service">Saiba Mais</a>
-            </div>
-            <div class="service-card">
-                <div class="service-icon"><i class="fas fa-music"></i></div>
-                <h3>Flashmobs & Shows</h3>
-                <p>Ações surpresa, pedidos de casamento e entretenimento profissional.</p>
-                <a href="#contato" class="btn-service">Saiba Mais</a>
-            </div>
-        </div>
-      </section>
+        <section id="servicos" class="section">
+          <h2 class="section-title">O que fazemos</h2>
+          <div class="services-grid">
+              <article class="service-card">
+                  <div class="service-icon"><i class="fas fa-ring" aria-hidden="true"></i></div>
+                  <h3>Casamentos</h3>
+                  <p>Primeira dança, dança com os pais ou padrinhos. Do clássico ao moderno.</p>
+                  <a href="#contato" class="btn-service" aria-label="Orçamento para Casamento">Saiba Mais</a>
+              </article>
+              <article class="service-card featured">
+                  <div class="featured-badge">Mais Pedido</div>
+                  <div class="service-icon"><i class="fas fa-crown" aria-hidden="true"></i></div>
+                  <h3>15 Anos & Formaturas</h3>
+                  <p>Aberturas de pista incríveis para grupos ou solo. Surpreenda seus convidados!</p>
+                  <a href="#contato" class="btn-service" aria-label="Orçamento para 15 Anos">Saiba Mais</a>
+              </article>
+              <article class="service-card">
+                  <div class="service-icon"><i class="fas fa-music" aria-hidden="true"></i></div>
+                  <h3>Flashmobs & Shows</h3>
+                  <p>Ações surpresa, pedidos de casamento e entretenimento profissional.</p>
+                  <a href="#contato" class="btn-service" aria-label="Orçamento para Flashmobs">Saiba Mais</a>
+              </article>
+          </div>
+        </section>
 
-      <section id="sobre" class="about-section">
-        <div class="about-container">
-            
-            <div class="about-image-area">
-                <img src="/dupla.jpg" alt="Danielle e Aléxia" class="about-photo">
-                
-                <div class="team-names">
-                    <div class="name-box"><span class="name">DANIELLE</span><span class="surname">CAPPELLETTI</span></div>
-                    <div class="name-box"><span class="name">ALÉXIA</span><span class="surname">CHAVES</span></div>
-                </div>
-            </div> <div class="about-info-area">
-                <h2 class="ficha-title">FICHA<br>TÉCNICA</h2>
-                <ul class="specs-list">
-                    <li><i class="fas fa-check"></i> Coreógrafas e Professoras</li>
-                    <li><i class="fas fa-check"></i> Licenciadas em Dança (UFRGS)</li>
-                    <li><i class="fas fa-check"></i> Bailarinas e Artistas</li>
-                    <li><i class="fas fa-check"></i> +6 anos de experiência</li>
-                </ul>
-                <p class="about-text">Nosso diferencial é encarar a dança como arte, mesclando seus desejos com as tendências atuais.</p>
-            </div>
+        <section id="sobre" class="about-section">
+          <div class="about-container">
+              <div class="about-image-area">
+                  <img src="/dupla.webp" alt="Foto das coreógrafas Danielle e Aléxia sorrindo" class="about-photo" loading="lazy" width="450" height="450">
+                  <div class="team-names">
+                      <div class="name-box"><span class="name">DANIELLE</span><span class="surname">CAPPELLETTI</span></div>
+                      <div class="name-box"><span class="name">ALÉXIA</span><span class="surname">CHAVES</span></div>
+                  </div>
+              </div> 
+              <div class="about-info-area">
+                  <h2 class="ficha-title">FICHA<br>TÉCNICA</h2>
+                  <ul class="specs-list">
+                      <li><i class="fas fa-check" aria-hidden="true"></i> Coreógrafas e Professoras</li>
+                      <li><i class="fas fa-check" aria-hidden="true"></i> Licenciadas em Dança (UFRGS)</li>
+                      <li><i class="fas fa-check" aria-hidden="true"></i> Bailarinas e Artistas</li>
+                      <li><i class="fas fa-check" aria-hidden="true"></i> +6 anos de experiência</li>
+                  </ul>
+                  <p class="about-text">Nosso diferencial é encarar a dança como arte, mesclando seus desejos com as tendências atuais.</p>
+              </div>
+          </div>
+        </section>
 
-        </div>
-      </section>
+        <section id="galeria" class="section">
+          <h2 class="section-title">Nossa Galeria</h2>
+          <div class="gallery-grid">
+              <div class="gallery-item" data-src="https://images.unsplash.com/photo-1545959966-267868352525?q=80&w=800">
+                  <img src="https://images.unsplash.com/photo-1545959966-267868352525?q=80&w=400" alt="Casal de noivos dançando valsa sob luzes" loading="lazy">
+              </div>
+              <div class="gallery-item" data-src="https://images.unsplash.com/photo-1516450360452-9312f5e86fc7?q=80&w=800">
+                  <img src="https://images.unsplash.com/photo-1516450360452-9312f5e86fc7?q=80&w=400" alt="Debutante dançando com vestido longo" loading="lazy">
+              </div>
+              <div class="gallery-item" data-src="https://images.unsplash.com/photo-1504609773096-104ff2c73ba4?q=80&w=800">
+                  <img src="https://images.unsplash.com/photo-1504609773096-104ff2c73ba4?q=80&w=400" alt="Grupo de formandos fazendo coreografia" loading="lazy">
+              </div>
+              <div class="gallery-item" data-src="https://images.unsplash.com/photo-1533174072545-e8d4aa97edf9?q=80&w=800">
+                  <img src="https://images.unsplash.com/photo-1533174072545-e8d4aa97edf9?q=80&w=400" alt="Noivos finalizando dança com pose romântica" loading="lazy">
+              </div>
+              <div class="gallery-item" data-src="https://images.unsplash.com/photo-1515187029135-18ee286d815b?q=80&w=800">
+                  <img src="https://images.unsplash.com/photo-1515187029135-18ee286d815b?q=80&w=400" alt="Festa animada com dança coreografada" loading="lazy">
+              </div>
+              <div class="gallery-item" data-src="https://images.unsplash.com/photo-1492684223066-81342ee5ff30?q=80&w=800">
+                  <img src="https://images.unsplash.com/photo-1492684223066-81342ee5ff30?q=80&w=400" alt="Performance artística em evento" loading="lazy">
+              </div>
+          </div>
 
-      <section id="galeria" class="section">
-        <h2 class="section-title">Nossa Galeria</h2>
-        <div class="gallery-grid">
-            <div class="gallery-item" data-src="https://images.unsplash.com/photo-1545959966-267868352525?q=80&w=800"><img src="https://images.unsplash.com/photo-1545959966-267868352525?q=80&w=400" alt="Evento 1"></div>
-            <div class="gallery-item" data-src="https://images.unsplash.com/photo-1516450360452-9312f5e86fc7?q=80&w=800"><img src="https://images.unsplash.com/photo-1516450360452-9312f5e86fc7?q=80&w=400" alt="Evento 2"></div>
-            <div class="gallery-item" data-src="https://images.unsplash.com/photo-1504609773096-104ff2c73ba4?q=80&w=800"><img src="https://images.unsplash.com/photo-1504609773096-104ff2c73ba4?q=80&w=400" alt="Evento 3"></div>
-            <div class="gallery-item" data-src="https://images.unsplash.com/photo-1533174072545-e8d4aa97edf9?q=80&w=800"><img src="https://images.unsplash.com/photo-1533174072545-e8d4aa97edf9?q=80&w=400" alt="Evento 4"></div>
-            <div class="gallery-item" data-src="https://images.unsplash.com/photo-1515187029135-18ee286d815b?q=80&w=800"><img src="https://images.unsplash.com/photo-1515187029135-18ee286d815b?q=80&w=400" alt="Evento 5"></div>
-            <div class="gallery-item" data-src="https://images.unsplash.com/photo-1492684223066-81342ee5ff30?q=80&w=800"><img src="https://images.unsplash.com/photo-1492684223066-81342ee5ff30?q=80&w=400" alt="Evento 6"></div>
-        </div>
+          <div class="instagram-section">
+              <h3 class="insta-title"><i class="fab fa-instagram" aria-hidden="true"></i> Siga @ledansecoreografias</h3>
+              <div id="insta-feed" class="insta-grid" role="feed" aria-busy="true"></div>
+              <div class="insta-action">
+                  <a href="https://www.instagram.com/ledansecoreografias" target="_blank" rel="noopener" class="btn-service">Ver perfil completo</a>
+              </div>
+          </div>
+        </section>
 
-        <div class="instagram-section">
-    <h3 class="insta-title">
-        <i class="fab fa-instagram"></i> 
-        Siga @ledansecoreografias
-    </h3>
-    
-    <div id="insta-feed" class="insta-grid"></div>
-    
-    <div class="insta-action">
-        <a href="https://www.instagram.com/ledansecoreografias" target="_blank" rel="noopener" class="btn-service">
-            Ver perfil completo
-        </a>
-    </div>
-</div>
-      </section>
+        <section id="contato" class="contact-section">
+          <h2 class="section-title">Vamos conversar?</h2>
+          <div class="contact-container">
+              <div class="contact-info">
+                  <h3>Entre em contato</h3>
+                  <p>Estamos prontas para tirar suas dúvidas e planejar a coreografia perfeita.</p>
+                  
+                  <div class="contact-socials">
+                      <a href="https://www.instagram.com/ledansecoreografias" target="_blank" rel="noopener noreferrer" aria-label="Visitar Instagram da LeDanse">
+                          <i class="fab fa-instagram" aria-hidden="true"></i>
+                      </a>
+                      <a href="https://www.facebook.com/ledansecoreografias" target="_blank" rel="noopener noreferrer" aria-label="Visitar Facebook da LeDanse">
+                          <i class="fab fa-facebook" aria-hidden="true"></i>
+                      </a>
+                      <a href="https://wa.me/5551999598622" target="_blank" rel="noopener noreferrer" aria-label="Enviar mensagem no WhatsApp">
+                          <i class="fab fa-whatsapp" aria-hidden="true"></i>
+                      </a>
+                  </div>
 
-<section id="contato" class="contact-section">
-        <h2 class="section-title">Vamos conversar?</h2>
-        <div class="contact-container">
-            <div class="contact-info">
-                <h3>Entre em contato</h3>
-                <p>Estamos prontas para tirar suas dúvidas e planejar a coreografia perfeita.</p>
-                
-<div class="contact-socials">
-    <a href="https://www.instagram.com/ledansecoreografias" target="_blank" rel="noopener noreferrer" aria-label="Instagram">
-        <i class="fab fa-instagram"></i>
-    </a>
-    <a href="https://www.facebook.com/ledansecoreografias" target="_blank" rel="noopener noreferrer" aria-label="Facebook">
-        <i class="fab fa-facebook"></i>
-    </a>
-    <a href="https://wa.me/5551999598622" target="_blank" rel="noopener noreferrer" aria-label="WhatsApp">
-        <i class="fab fa-whatsapp"></i>
-    </a>
-</div>
+                  <div class="info-item">
+                      <i class="fas fa-envelope" aria-hidden="true"></i>
+                      <div><strong>Email</strong><br>ledanseeventos@gmail.com</div>
+                  </div>
+                  <div class="info-item">
+                      <i class="fas fa-map-marker-alt" aria-hidden="true"></i>
+                      <div><strong>Localização</strong><br>Porto Alegre, RS</div>
+                  </div>
+              </div>
 
-                <div class="info-item">
-                    <i class="fas fa-envelope"></i>
-                    <div><strong>Email</strong><br>ledanseeventos@gmail.com</div>
-                </div>
-                <div class="info-item">
-                    <i class="fas fa-map-marker-alt"></i>
-                    <div><strong>Localização</strong><br>Porto Alegre, RS</div>
-                </div>
-            </div>
+              <form class="contact-form" id="contactForm">
+                  <div class="form-group">
+                      <label for="nome">Seu Nome</label>
+                      <input type="text" id="nome" name="nome" required placeholder="Ex: Maria Silva" autocomplete="name">
+                  </div>
+                  
+                  <div class="form-group">
+                      <label for="email">Seu Email</label>
+                      <input type="email" id="email" name="email" required placeholder="Ex: maria@email.com" autocomplete="email">
+                  </div>
+                  <div class="form-group">
+                      <label for="telefone">Seu Telefone</label>
+                      <input type="tel" id="telefone" name="telefone" required placeholder="Ex: (51) 99999-9999" maxlength="15" autocomplete="tel">
+                  </div>
+                  <div class="form-group">
+                      <label for="tipo-evento">Tipo de Evento</label>
+                      <select id="tipo-evento" name="tipo-evento">
+                          <option value="" disabled selected>Selecione o tipo de evento</option>
+                          <option>Casamento</option>
+                          <option>15 Anos</option>
+                          <option>Formatura</option>
+                          <option>Outro</option>
+                      </select>
+                  </div>
+                  <div class="form-group">
+                      <label for="mensagem">Mensagem</label>
+                      <textarea id="mensagem" name="mensagem" rows="4" placeholder="Conte um pouco sobre sua ideia..."></textarea>
+                  </div>
+                  
+                  <button type="submit">Enviar Mensagem</button>
+              </form>
+          </div>
+        </section>
 
-            <form class="contact-form" id="contactForm">
-                <div class="form-group">
-                    <label for="nome">Seu Nome</label>
-                    <input type="text" id="nome" required placeholder="Ex: Maria Silva">
-                </div>
-                
-                <div class="form-group">
-                    <label for="email">Seu Email</label>
-                    <input type="email" id="email" required placeholder="Ex: maria@email.com">
-                </div>
-                <div class="form-group">
-                    <label for="telefone">Seu Telefone</label>
-                    <input type="tel" id="telefone" required placeholder="Ex: (51) 99999-9999">
-                </div>
-                <div class="form-group">
-    <label for="tipo-evento">Tipo de Evento</label>
-    <select id="tipo-evento" name="tipo-evento">
-        <option value="" disabled selected>Selecione o tipo de evento</option>
-        <option>Casamento</option>
-        <option>15 Anos</option>
-        <option>Formatura</option>
-        <option>Outro</option>
-    </select>
-</div>
-                <div class="form-group">
-                    <label for="mensagem">Mensagem</label>
-                    <textarea id="mensagem" rows="4" placeholder="Conte um pouco sobre sua ideia..."></textarea>
-                </div>
-                <div class="g-recaptcha" data-sitekey="6LexHFUsAAAAALR2NZ9fFYRFwzb4qiw69kcLiQJZ"
-                    data-theme="dark">
-                </div>
-
-                <button type="submit">Enviar Mensagem</button>
-            </form>
-        </div>
-      </section>
+      </main>
 
       <footer class="footer">
         <div class="footer-content">
@@ -216,17 +263,21 @@
             </div>
             <div class="footer-col">
                 <h4>Links Rápidos</h4>
-                <ul>
-                    <li><a href="#home">Home</a></li>
-                    <li><a href="#servicos">Serviços</a></li>
-                    <li><a href="#galeria">Galeria</a></li>
-                </ul>
+                <nav aria-label="Rodapé">
+                  <ul>
+                      <li><a href="#home">Home</a></li>
+                      <li><a href="#servicos">Serviços</a></li>
+                      <li><a href="#galeria">Galeria</a></li>
+                  </ul>
+                </nav>
             </div>
             <div class="footer-col">
                 <h4>Contato</h4>
-                <p>Porto Alegre, RS</p>
-                <p>(51) 99959-8622 | (51) 98301-9749</p>
-                <p>ledanseeventos@gmail.com</p>
+                <address>
+                  <p>Porto Alegre, RS</p>
+                  <p>(51) 99959-8622 | (51) 98301-9749</p>
+                  <p>ledanseeventos@gmail.com</p>
+                </address>
             </div>
         </div>
         <div class="footer-bottom">
@@ -234,12 +285,15 @@
         </div>
       </footer>
 
-      <div id="lightbox" class="lightbox">
-        <span class="close-lightbox" aria-label="Fechar Galeria">&times;</span>
-        <img class="lightbox-content" id="lightbox-img" alt="Visualização ampliada da galeria">
+      <div id="lightbox" class="lightbox" role="dialog" aria-modal="true" aria-label="Galeria de Fotos">
+        <button class="close-lightbox" aria-label="Fechar">&times;</button>
+        <button class="lightbox-btn lightbox-prev" aria-label="Foto Anterior"><i class="fas fa-chevron-left"></i></button>
+        <img class="lightbox-content" id="lightbox-img" alt="Visualização ampliada">
+        <button class="lightbox-btn lightbox-next" aria-label="Próxima Foto"><i class="fas fa-chevron-right"></i></button>
       </div>
 
     </div>
+    
     <script type="module" src="/src/main.js"></script>
   </body>
 </html>
