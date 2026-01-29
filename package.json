@@ -15,6 +15,7 @@
     "vite": "npm:rolldown-vite@7.2.5"
   },
   "dependencies": {
-    "@emailjs/browser": "^4.4.1"
+    "@emailjs/browser": "^4.4.1",
+    "@vercel/kv": "^3.0.0"
   }
 }

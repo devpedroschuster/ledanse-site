@@ -16,12 +16,11 @@ if (contactForm) {
     contactForm.addEventListener('submit', (e) => {
         e.preventDefault();
 
-        // 1. VERIFICAÇÃO DO RECAPTCHA
         const recaptchaResponse = grecaptcha.getResponse();
         
         if (!recaptchaResponse) {
             alert('⚠️ Por favor, confirme que você não é um robô clicando na caixa.');
-            return; // Para tudo e não envia
+            return;
         }
 
         const btn = contactForm.querySelector('button[type="submit"]');
@@ -36,14 +35,14 @@ if (contactForm) {
             telefone: document.getElementById('telefone').value,
             tipo_evento: document.getElementById('tipo-evento').value,
             mensagem: document.getElementById('mensagem').value,
-            'g-recaptcha-response': recaptchaResponse // O EmailJS procura por essa chave exata!
+            'g-recaptcha-response': recaptchaResponse
         };
 
         emailjs.send(SERVICE_ID, TEMPLATE_ID, templateParams)
             .then(() => {
                 alert('✅ Mensagem enviada com sucesso! Em breve entraremos em contato.');
                 contactForm.reset();
-                grecaptcha.reset(); // Limpa o captcha para um novo envio
+                grecaptcha.reset();
             })
             .catch((error) => {
                 console.error('Erro ao enviar email:', error);
@@ -91,4 +90,44 @@ if(lightbox && galleryItems.length > 0) {
     lightbox.addEventListener('click', (e) => {
         if (e.target === lightbox) closeLightbox();
     });
+}
+
+
+// INTEGRAÇÃO INSTAGRAM
+
+const instagramContainer = document.getElementById('insta-feed');
+
+if (instagramContainer) {
+    fetch('/api/instagram') 
+        .then(response => {
+            if (!response.ok) throw new Error('Erro na API');
+            return response.json();
+        })
+        .then(data => {
+            instagramContainer.innerHTML = '';
+
+            if (!data.data) return;
+
+            data.data.forEach(post => {
+                const link = document.createElement('a');
+                link.href = post.permalink;
+                link.target = "_blank";
+                link.rel = "noopener noreferrer";
+                link.className = "insta-item";
+
+                const imageUrl = post.media_type === 'VIDEO' ? post.thumbnail_url : post.media_url;
+
+                const img = document.createElement('img');
+                img.src = imageUrl;
+                img.alt = post.caption ? post.caption.slice(0, 50) + '...' : 'Post Instagram Le Danse';
+                img.loading = "lazy";
+                
+                link.appendChild(img);
+                instagramContainer.appendChild(link);
+            });
+        })
+        .catch(error => {
+            console.error("Erro no feed:", error);
+            instagramContainer.innerHTML = '<div style="text-align: center; width: 100%; padding: 20px;"><a href="https://instagram.com/ledansecoreografias" target="_blank" class="btn-service" style="border:none;">Ver no Instagram</a></div>';
+        });
 }

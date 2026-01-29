@@ -1,6 +1,4 @@
-/* VARIÁVEIS E RESET */
 :root {
-  /* Paleta Visual */
   --bg-color: #0E1019;
   --bg-card: #161925;
   --text-color: #FFFFFF;
@@ -49,7 +47,6 @@ html {
   align-items: center;
 }
 
-/* Logo Textual */
 .logo {
   font-family: var(--font-main);
   font-weight: 700;
@@ -108,7 +105,6 @@ html {
   color: var(--bg-color) !important;
 }
 
-/* HERO SECTION */
 .hero {
   position: relative;
   height: 90vh;
@@ -200,7 +196,6 @@ button:hover {
   border-color: var(--accent-color);
 }
 
-/* SEÇÕES GERAIS & TEXTURA DE FUNDO */
 .section {
   padding: 5rem 2rem;
   width: 100%;
@@ -439,7 +434,7 @@ button:hover {
     left: 0; top: 0;
     width: 100%; height: 100%;
     background-color: rgba(14, 16, 25, 0.95);
-    -webkit-backdrop-filter: blur(10px); /* Suporte Safari */    
+    -webkit-backdrop-filter: blur(10px);   
     backdrop-filter: blur(10px);
     justify-content: center;
     align-items: center;
@@ -584,6 +579,32 @@ button:hover {
     font-size: 0.9rem;
 }
 
+.insta-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+    gap: 10px;
+    max-width: 1000px;
+    margin: 0 auto 20px auto;
+}
+
+.insta-item {
+    position: relative;
+    aspect-ratio: 1/1;
+    overflow: hidden;
+    border-radius: 10px;
+    transition: transform 0.3s ease;
+}
+
+.insta-item img, .insta-item video {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.insta-item:hover {
+    transform: scale(1.02);
+    opacity: 0.9;
+}
 
 .instagram-section {
     margin-top: 5rem;
