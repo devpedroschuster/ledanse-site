@@ -200,6 +200,7 @@ if(btnZap) {
 // INSTAGRAM
 
 const instagramContainer = document.getElementById('insta-feed');
+
 if (instagramContainer) {
     instagramContainer.innerHTML = Array(6).fill('<div class="skeleton insta-item"></div>').join('');
     
@@ -207,31 +208,59 @@ if (instagramContainer) {
         .then(res => res.json())
         .then(data => {
             instagramContainer.innerHTML = '';
+            
             if (data.data) {
                 data.data.forEach(post => {
                     const link = document.createElement('a');
                     link.className = "insta-item reveal";
-                    link.href = post.permalink; link.target = "_blank"; link.rel = "noopener";
+                    link.href = post.permalink; 
+                    link.target = "_blank"; 
+                    link.rel = "noopener";
                     
-                    const img = document.createElement('img');
-                    img.src = post.media_type === 'VIDEO' ? post.thumbnail_url : post.media_url;
-                    img.alt = post.caption ? post.caption.slice(0, 80) : 'Instagram LeDanse';
-                    img.loading = "lazy";
+                    // LÓGICA DE MÍDIA
+                    if (post.media_type === 'VIDEO') {
+                        const video = document.createElement('video');
+                        video.src = post.media_url;
+                        video.poster = post.thumbnail_url;
+                        video.muted = true;
+                        video.loop = true;
+                        video.playsInline = true;
+                        
+                        link.addEventListener('mouseenter', () => {
+                            video.play().catch(e => console.log("Aguardando carregamento..."));
+                        });
+                        
+                        link.addEventListener('mouseleave', () => {
+                            video.pause();
+                            video.currentTime = 0;
+                        });
+
+                        link.appendChild(video);
+
+                    } else {
+                        const img = document.createElement('img');
+                        img.src = post.media_url;
+                        img.alt = post.caption ? post.caption.slice(0, 80) : 'Instagram LeDanse';
+                        img.loading = "lazy";
+                        
+                        link.appendChild(img);
+                    }
                     
-                    link.appendChild(img);
                     instagramContainer.appendChild(link);
                 });
+
                 requestAnimationFrame(() => {
                     document.querySelectorAll('.insta-item').forEach(el => revealObserver.observe(el));
                 });
             }
         })
-        .catch(() => {
+        .catch((err) => {
+            console.error(err);
             instagramContainer.innerHTML = '<div style="text-align:center;padding:20px"><a href="https://instagram.com/ledansecoreografias" target="_blank" class="btn-service">Ver Instagram</a></div>';
         });
 }
 
-// 8. SCROLL
+// SCROLL
 
 const revealElements = document.querySelectorAll('.service-card, .section-title, .about-text, .gallery-item, .contact-container');
 revealElements.forEach(el => el.classList.add('reveal'));
@@ -275,5 +304,3 @@ window.addEventListener('scroll', () => {
 scrollTopBtn.addEventListener('click', () => {
     window.scrollTo({ top: 0, behavior: 'smooth' });
 });
-
-// TESTE DEPLOY

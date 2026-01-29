@@ -275,7 +275,7 @@ button:hover {
 }
 
 .service-card {
-  background: var(--glass-bg);
+background: var(--glass-bg);
   -webkit-backdrop-filter: blur(12px);
   backdrop-filter: blur(12px);
   padding: 2.5rem;
@@ -299,7 +299,7 @@ button:hover {
 
 .service-card.featured {
   border: 1px solid var(--accent-color);
-  box-shadow: 0 0 20px rgba(249, 165, 203, 0.1);
+  background: linear-gradient(145deg, rgba(249, 165, 203, 0.1) 0%, var(--glass-bg) 100%);
 }
 
 .featured-badge {
@@ -312,37 +312,98 @@ button:hover {
   font-size: 0.8rem;
   font-weight: bold;
   border-radius: 20px;
-  transform: translateZ(10px);
+  transform: translateZ(20px);
+  box-shadow: 0 5px 15px rgba(249, 165, 203, 0.4);
+}
+
+.service-header {
+    margin-bottom: 1.5rem;
 }
 
 .service-icon {
-  font-size: 2rem;
+  font-size: 2.5rem;
   color: var(--accent-color);
-  margin-bottom: 1.5rem;
+  margin-bottom: 1rem;
   transition: transform 0.4s ease;
+  display: inline-block;
 }
 
-.service-card:hover .service-icon { transform: translateZ(20px) scale(1.1); }
-.service-card h3 { font-size: 1.5rem; margin-bottom: 1rem; transform: translateZ(5px); }
-.service-card p { color: #d1d1d1; margin-bottom: 2rem; flex-grow: 1; font-weight: 300; transform: translateZ(5px); }
+.service-card:hover .service-icon { 
+    transform: translateZ(30px) scale(1.1); 
+}
+
+.service-card h3 {
+  font-size: 1.6rem;
+  margin-bottom: 0.5rem;
+  transform: translateZ(10px);
+  color: #fff;
+}
+
+.service-desc {
+  color: #d1d1d1;
+  margin-bottom: 1.5rem;
+  font-weight: 300;
+  font-size: 0.95rem;
+  line-height: 1.5;
+  min-height: 60px;
+}
+
+.service-features {
+    list-style: none;
+    margin-bottom: 2rem;
+    padding: 0;
+    flex-grow: 1;
+    border-top: 1px solid rgba(255,255,255,0.1);
+    padding-top: 1.5rem;
+}
+
+.service-features li {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-bottom: 0.8rem;
+    color: #eee;
+    font-size: 0.95rem;
+    transform: translateZ(5px);
+}
+
+.service-features li i {
+    color: var(--accent-color);
+    font-size: 0.8rem;
+    background: rgba(249, 165, 203, 0.1);
+    padding: 5px;
+    border-radius: 50%;
+    width: 24px;
+    height: 24px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
 
 .btn-service {
   text-decoration: none;
   color: var(--accent-color);
   font-weight: bold;
   border: 1px solid var(--accent-color);
-  padding: 12px 20px;
+  padding: 12px 30px;
   text-align: center;
-  border-radius: 10px;
+  border-radius: 50px;
   transition: 0.3s;
-  transform: translateZ(10px);
-  display: inline-block;
+  transform: translateZ(20px);
+  display: inline-block; 
+  width: auto;
 }
 
 .btn-service:hover {
   background: var(--accent-color);
   color: var(--bg-color);
-  box-shadow: 0 0 15px rgba(249, 165, 203, 0.4);
+  box-shadow: 0 0 20px rgba(249, 165, 203, 0.5);
+}
+
+.service-card .btn-service {
+    display: block;
+    width: 100%;
+    margin-top: auto;
 }
 
 /* SOBRE */
@@ -397,7 +458,7 @@ button:hover {
 /* GALERIA */
 .gallery-grid {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
     gap: 1.5rem;
     padding: 0 1rem;
     max-width: 1200px;
@@ -432,9 +493,32 @@ button:hover {
     padding: 0 10px;
 }
 
-.insta-item { position: relative; aspect-ratio: 1/1; overflow: hidden; border-radius: 10px; transition: transform 0.3s ease; border: 1px solid var(--glass-border); }
-.insta-item img, .insta-item video { width: 100%; height: 100%; object-fit: cover; }
-.insta-item:hover { transform: scale(1.05); opacity: 0.9; box-shadow: 0 0 20px rgba(0,0,0,0.5); z-index: 2; }
+.insta-item {
+    position: relative;
+    aspect-ratio: 1/1;
+    overflow: hidden;
+    border-radius: 10px;
+    border: 1px solid var(--glass-border);
+    background: #000;
+    cursor: pointer;
+}
+
+.insta-item img, 
+.insta-item video {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: all 0.5s ease;
+}
+
+.insta-item:hover img {
+    transform: scale(1.1);
+    filter: brightness(1.2);
+}
+
+.insta-item video {
+    transform: scale(1.01);
+}
 
 /* CONTATO */
 .contact-container {
