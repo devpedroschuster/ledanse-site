@@ -655,4 +655,4 @@ address {
 .lightbox-next { right: 20px; }
 @media (max-width: 768px) { .lightbox-btn { width: 40px; height: 40px; font-size: 1rem; } .lightbox-prev { left: 10px; } .lightbox-next { right: 10px; } }
 
-/* Force deploy
+/* Force deploy */
