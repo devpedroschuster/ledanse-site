@@ -62,10 +62,16 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     <link rel="stylesheet" href="src/style.css">
 
-    <script src="https://unpkg.com/smoothscroll-polyfill/dist/smoothscroll.min.js"></script>
-    <script>smoothscroll.polyfill();</script>
+   <script src="https://unpkg.com/smoothscroll-polyfill/dist/smoothscroll.min.js"></script>
+<script>
+  window.onload = function() {
+    if (window.smoothscroll) {
+      window.smoothscroll.polyfill();
+    }
+  };
+</script>
 
-    <script src="https://www.google.com/recaptcha/api.js?render=SUA_NOVA_CHAVE_V3_AQUI"></script>
+    <script async defer src="https://www.google.com/recaptcha/api.js?render=6LexHFUsAAAAALR2NZ9fFYRFwzb4qiw69kcLiQJZ"></script>
   </head>
   <body>
     <a href="#main-content" class="skip-link">Pular para o conteúdo principal</a>

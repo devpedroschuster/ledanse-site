@@ -16,6 +16,7 @@
   },
   "dependencies": {
     "@emailjs/browser": "^4.4.1",
-    "@upstash/redis": "^1.36.1"
+    "@upstash/redis": "^1.36.1",
+    "ioredis": "^5.9.2"
   }
 }
