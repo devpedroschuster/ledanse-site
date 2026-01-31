@@ -95,7 +95,7 @@ if(lightbox) {
     });
 }
 
-// FORMULÁRIO COM VALIDAÇÃO SEGURA
+// FORMULÁRIO
 
 const contactForm = document.getElementById('contactForm');
 
@@ -105,55 +105,75 @@ if (contactForm) {
         const btn = contactForm.querySelector('button[type="submit"]');
         const originalText = btn.textContent;
         
-        btn.textContent = 'Verificando...';
-        btn.disabled = true;
-
-        if (typeof grecaptcha === 'undefined') {
-            alert("Erro de conexão com Google reCAPTCHA. Recarregue a página.");
-            btn.textContent = originalText;
-            btn.disabled = false;
-            return;
-        }
-
-        grecaptcha.ready(() => {
-            grecaptcha.execute(RECAPTCHA_SITE_KEY, {action: 'submit'}).then(async (token) => {
-                try {
-                    const validation = await fetch('/api/validate_captcha', {
-                        method: 'POST',
-                        headers: { 'Content-Type': 'application/json' },
-                        body: JSON.stringify({ token })
-                    });
-                    
-                    const validationResult = await validation.json();
-
-                    if (!validation.ok || !validationResult.success) {
-                        throw new Error('Falha na verificação de segurança (Robô detectado).');
-                    }
-
-                    btn.textContent = 'Enviando...';
-                    
-                    const templateParams = {
-                        nome: document.getElementById('nome').value,
-                        email: document.getElementById('email').value,
-                        telefone: document.getElementById('telefone').value,
-                        tipo_evento: document.getElementById('tipo-evento').value,
-                        mensagem: document.getElementById('mensagem').value
-                    };
-
-                    await emailjs.send(SERVICE_ID, TEMPLATE_ID, templateParams);
-                    
-                    alert('✅ Mensagem enviada com sucesso! Em breve entraremos em contato.');
-                    contactForm.reset();
-
-                } catch (error) {
-                    console.error('Erro de envio:', error);
-                    alert('❌ ' + (error.message || 'Erro ao enviar mensagem. Tente novamente.'));
-                } finally {
-                    btn.textContent = originalText;
-                    btn.disabled = false;
+        const loadRecaptcha = () => {
+            return new Promise((resolve, reject) => {
+                if (typeof grecaptcha !== 'undefined') {
+                    resolve();
+                    return;
                 }
+                
+                const script = document.createElement('script');
+                script.src = `https://www.google.com/recaptcha/api.js?render=${RECAPTCHA_SITE_KEY}`;
+                script.async = true;
+                script.defer = true;
+                script.onload = resolve;
+                script.onerror = () => reject(new Error('Bloqueador detectado.'));
+                document.head.appendChild(script);
             });
-        });
+        };
+
+        const submitForm = async () => {
+            try {
+                btn.textContent = 'Verificando segurança...';
+                btn.disabled = true;
+
+                await loadRecaptcha();
+
+                await new Promise(r => grecaptcha.ready(r));
+
+                const token = await grecaptcha.execute(RECAPTCHA_SITE_KEY, {action: 'submit'});
+
+                const validation = await fetch('/api/validate_captcha', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ token })
+                });
+                
+                const validationResult = await validation.json();
+
+                if (!validation.ok || !validationResult.success) {
+                    throw new Error('Falha na verificação de robô.');
+                }
+
+                btn.textContent = 'Enviando...';
+                
+                const templateParams = {
+                    nome: document.getElementById('nome').value,
+                    email: document.getElementById('email').value,
+                    telefone: document.getElementById('telefone').value,
+                    tipo_evento: document.getElementById('tipo-evento').value,
+                    mensagem: document.getElementById('mensagem').value
+                };
+
+                await emailjs.send(SERVICE_ID, TEMPLATE_ID, templateParams);
+                
+                alert('✅ Mensagem enviada com sucesso! Em breve entraremos em contato.');
+                contactForm.reset();
+
+            } catch (error) {
+                console.error('Erro:', error);
+                let msg = 'Erro ao enviar. Tente novamente.';
+                if (error.message.includes('Bloqueador')) {
+                    msg = 'Erro de conexão com o Google. Se você usa bloqueadores de anúncio, tente desativar temporariamente.';
+                }
+                alert('❌ ' + msg);
+            } finally {
+                btn.textContent = originalText;
+                btn.disabled = false;
+            }
+        };
+
+        submitForm();
     });
 }
 
