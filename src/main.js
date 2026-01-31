@@ -6,8 +6,8 @@ import emailjs from '@emailjs/browser';
 const SERVICE_ID = import.meta.env.VITE_EMAILJS_SERVICE_ID;
 const TEMPLATE_ID = import.meta.env.VITE_EMAILJS_TEMPLATE_ID;
 const PUBLIC_KEY = import.meta.env.VITE_EMAILJS_PUBLIC_KEY;
-const RECAPTCHA_SITE_KEY = '6LexHFUsAAAAALR2NZ9fFYRFwzb4qiw69kcLiQJZ';
-// const RECAPTCHA_SITE_KEY = import.meta.env.VITE_RECAPTCHA_SITE_KEY;
+// const RECAPTCHA_SITE_KEY = '6LexHFUsAAAAALR2NZ9fFYRFwzb4qiw69kcLiQJZ';
+const RECAPTCHA_SITE_KEY = import.meta.env.VITE_RECAPTCHA_SITE_KEY;
 
 emailjs.init(PUBLIC_KEY);
 
@@ -98,9 +98,6 @@ if(lightbox) {
 
 // FORMULÁRIO
 
-// ==========================================
-// 4. FORMULÁRIO (Com Modo Dev Automático)
-// ==========================================
 const contactForm = document.getElementById('contactForm');
 
 if (contactForm) {
@@ -110,30 +107,25 @@ if (contactForm) {
         const originalText = btn.textContent;
         
         try {
-            // MUDANÇA AQUI: O texto do log mudou para provar que atualizou
             console.log("1. Iniciando processo (V2)..."); 
             btn.textContent = 'Processando...';
             btn.disabled = true;
 
             let token = null;
 
-            // Tenta obter o token do Google
             try {
                 if (typeof grecaptcha !== 'undefined') {
                     await new Promise(r => grecaptcha.ready(r));
-                    // CHAVE FIXA
                     token = await grecaptcha.execute('6LexHFUsAAAAALR2NZ9fFYRFwzb4qiw69kcLiQJZ', {action: 'submit'});
                     console.log("Token Google gerado:", token);
                 } else {
                     throw new Error('Grecaptcha undefined');
                 }
             } catch (err) {
-                // SE DER ERRO NO GOOGLE, USA O MODO DEV
                 console.warn("⚠️ Google falhou/bloqueado. Usando BYPASS DE TESTE.");
                 token = 'BYPASS_DEV_MODE'; 
             }
 
-            // Envia para o Backend
             const validation = await fetch('/api/validate_captcha', {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
@@ -146,7 +138,6 @@ if (contactForm) {
                 throw new Error('Segurança recusou o envio.');
             }
 
-            // Envia Email
             btn.textContent = 'Enviando email...';
             
             const templateParams = {
