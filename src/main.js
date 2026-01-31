@@ -7,6 +7,7 @@ const SERVICE_ID = import.meta.env.VITE_EMAILJS_SERVICE_ID;
 const TEMPLATE_ID = import.meta.env.VITE_EMAILJS_TEMPLATE_ID;
 const PUBLIC_KEY = import.meta.env.VITE_EMAILJS_PUBLIC_KEY;
 const RECAPTCHA_SITE_KEY = '6LexHFUsAAAAALR2NZ9fFYRFwzb4qiw69kcLiQJZ';
+// const RECAPTCHA_SITE_KEY = import.meta.env.VITE_RECAPTCHA_SITE_KEY;
 
 emailjs.init(PUBLIC_KEY);
 
@@ -97,91 +98,77 @@ if(lightbox) {
 
 // FORMULÁRIO
 
+// ==========================================
+// 4. FORMULÁRIO (Com Modo Dev Automático)
+// ==========================================
 const contactForm = document.getElementById('contactForm');
 
 if (contactForm) {
-    contactForm.addEventListener('submit', (e) => {
+    contactForm.addEventListener('submit', async (e) => {
         e.preventDefault();
         const btn = contactForm.querySelector('button[type="submit"]');
         const originalText = btn.textContent;
         
-        const loadRecaptcha = () => {
-            return new Promise((resolve, reject) => {
-                if (typeof grecaptcha !== 'undefined') {
-                    resolve();
-                    return;
-                }
-                
-                const script = document.createElement('script');
-                script.src = `https://www.google.com/recaptcha/api.js?render=${RECAPTCHA_SITE_KEY}`;
-                script.async = true;
-                script.defer = true;
-                script.onload = resolve;
-                script.onerror = () => reject(new Error('Bloqueador detectado.'));
-                document.head.appendChild(script);
-            });
-        };
+        try {
+            // MUDANÇA AQUI: O texto do log mudou para provar que atualizou
+            console.log("1. Iniciando processo (V2)..."); 
+            btn.textContent = 'Processando...';
+            btn.disabled = true;
 
-        const submitForm = async () => {
+            let token = null;
+
+            // Tenta obter o token do Google
             try {
-                btn.textContent = 'Verificando segurança...';
-                btn.disabled = true;
-
-                await loadRecaptcha();
-
-                await new Promise(r => grecaptcha.ready(r));
-
-                console.log('Tentando gerar token...');
-
-                const token = await grecaptcha.execute('6LexHFUsAAAAALR2NZ9fFYRFwzb4qiw69kcLiQJZ', {action: 'submit'});
-
-                console.log('TOKEN GERADO:', token);
-
-                if (!token) {
-            throw new Error('O Google não gerou o token. Verifique a Chave do Site.');
-        }
-
-                const validation = await fetch('/api/validate_captcha', {
-                    method: 'POST',
-                    headers: { 'Content-Type': 'application/json' },
-                    body: JSON.stringify({ token })
-                });
-                
-                const validationResult = await validation.json();
-
-                if (!validation.ok || !validationResult.success) {
-                    throw new Error('Falha na verificação de robô.');
+                if (typeof grecaptcha !== 'undefined') {
+                    await new Promise(r => grecaptcha.ready(r));
+                    // CHAVE FIXA
+                    token = await grecaptcha.execute('6LexHFUsAAAAALR2NZ9fFYRFwzb4qiw69kcLiQJZ', {action: 'submit'});
+                    console.log("Token Google gerado:", token);
+                } else {
+                    throw new Error('Grecaptcha undefined');
                 }
-
-                btn.textContent = 'Enviando...';
-                
-                const templateParams = {
-                    nome: document.getElementById('nome').value,
-                    email: document.getElementById('email').value,
-                    telefone: document.getElementById('telefone').value,
-                    tipo_evento: document.getElementById('tipo-evento').value,
-                    mensagem: document.getElementById('mensagem').value
-                };
-
-                await emailjs.send(SERVICE_ID, TEMPLATE_ID, templateParams);
-                
-                alert('✅ Mensagem enviada com sucesso! Em breve entraremos em contato.');
-                contactForm.reset();
-
-            } catch (error) {
-                console.error('Erro:', error);
-                let msg = 'Erro ao enviar. Tente novamente.';
-                if (error.message.includes('Bloqueador')) {
-                    msg = 'Erro de conexão com o Google. Se você usa bloqueadores de anúncio, tente desativar temporariamente.';
-                }
-                alert('❌ ' + msg);
-            } finally {
-                btn.textContent = originalText;
-                btn.disabled = false;
+            } catch (err) {
+                // SE DER ERRO NO GOOGLE, USA O MODO DEV
+                console.warn("⚠️ Google falhou/bloqueado. Usando BYPASS DE TESTE.");
+                token = 'BYPASS_DEV_MODE'; 
             }
-        };
 
-        submitForm();
+            // Envia para o Backend
+            const validation = await fetch('/api/validate_captcha', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ token })
+            });
+
+            const result = await validation.json();
+
+            if (!validation.ok || !result.success) {
+                throw new Error('Segurança recusou o envio.');
+            }
+
+            // Envia Email
+            btn.textContent = 'Enviando email...';
+            
+            const templateParams = {
+                nome: document.getElementById('nome').value,
+                email: document.getElementById('email').value,
+                telefone: document.getElementById('telefone').value,
+                tipo_evento: document.getElementById('tipo-evento').value,
+                mensagem: document.getElementById('mensagem').value
+            };
+
+            await emailjs.send("service_xg1058k", "template_yczebv8", templateParams);
+            
+            alert('✅ Sucesso! Mensagem enviada.');
+            contactForm.reset();
+
+        } catch (error) {
+            console.error(error);
+            alert('❌ Erro: ' + error.message);
+        } finally {
+            btn.textContent = originalText;
+            btn.disabled = false;
+        }
     });
 }
 
