@@ -131,7 +131,15 @@ if (contactForm) {
 
                 await new Promise(r => grecaptcha.ready(r));
 
-                const token = await grecaptcha.execute(RECAPTCHA_SITE_KEY, {action: 'submit'});
+                console.log('Tentando gerar token...');
+
+                const token = await grecaptcha.execute('6LexHFUsAAAAALR2NZ9fFYRFwzb4qiw69kcLiQJZ', {action: 'submit'});
+
+                console.log('TOKEN GERADO:', token);
+
+                if (!token) {
+            throw new Error('O Google não gerou o token. Verifique a Chave do Site.');
+        }
 
                 const validation = await fetch('/api/validate_captcha', {
                     method: 'POST',
