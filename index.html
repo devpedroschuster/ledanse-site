@@ -8,7 +8,12 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link rel="preconnect" href="https://graph.instagram.com">
     <link rel="preconnect" href="https://www.google.com">
-    
+    <link rel="preload" as="video" href="/path/to/hero-video.mp4" type="video/mp4">
+    <link rel="preload" href="/fonts/primary-font.woff2" as="font" type="font/woff2" crossorigin>
+    <link rel="preconnect" href="https://api.emailjs.com">
+    <link rel="preconnect" href="https://www.google.com">
+    <link rel="preconnect" href="https://www.gstatic.com" crossorigin>
+
     <script async src="https://www.googletagmanager.com/gtag/js?id=G-66DV98JQZG"></script>
     <script>
       window.dataLayer = window.dataLayer || [];
@@ -62,9 +67,9 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     <link rel="stylesheet" href="src/style.css">
 
-    <script src="https://www.google.com/recaptcha/api.js?render=6LexHFUsAAAAALR2NZ9fFYRFwzb4qiw69kcLiQJZ"></script>
-
-   <script src="https://unpkg.com/smoothscroll-polyfill/dist/smoothscroll.min.js"></script>
+    <script src="https://www.google.com/recaptcha/api.js?render=6LexHFUsAAAAALR2NZ9fFYRFwzb4qiw69kcLiQJZ" defer></script>
+    <script src="https://kit.fontawesome.com/your-kit.js" defer crossorigin="anonymous"></script>
+    <script src="https://unpkg.com/smoothscroll-polyfill/dist/smoothscroll.min.js"></script>
 <script>
   window.onload = function() {
     if (window.smoothscroll) {
@@ -75,6 +80,7 @@
 
   </head>
   <body>
+    <div class="fixed-background"></div>
     <a href="#main-content" class="skip-link">Pular para o conteúdo principal</a>
 
     <div id="app">
@@ -108,14 +114,19 @@
           </video>
           <div class="hero-overlay"></div>
 
-          <div class="hero-content">
-            <h1>Tornando seu evento <br><span class="text-gradient">ainda mais especial!</span></h1>
-            <p>Coreografias personalizadas para casamentos, formaturas e 15 anos. Duas mulheres, muita arte e a dança que você sonha.</p>
-            <div class="cta-group">
-              <button id="btn-whatsapp" aria-label="Conversar no WhatsApp">Falar no WhatsApp</button>
-              <a href="#servicos" class="link-secondary">Ver Serviços</a>
+            <div class="hero-content">
+  <h1>
+    <span id="type-title-1"></span><br>
+    <span id="type-title-2" class="text-gradient"></span>
+  </h1>
+  
+  <p id="type-subtitle"></p>
+
+  <div class="cta-group">
+    <button id="btn-whatsapp" aria-label="Conversar no WhatsApp">Falar no WhatsApp</button>
+    <a href="#servicos" class="link-secondary">Ver Serviços</a>
+  </div>
             </div>
-          </div>
         </section>
 
         <section id="servicos" class="section">
@@ -197,28 +208,81 @@
           </div>
         </section>
 
-        <section id="galeria" class="section">
-          <h2 class="section-title">Nossa Galeria</h2>
-          <div class="gallery-grid">
-              <div class="gallery-item" data-src="https://images.unsplash.com/photo-1545959966-267868352525?q=80&w=800">
-                  <img src="https://images.unsplash.com/photo-1545959966-267868352525?q=80&w=400" alt="Casal de noivos dançando valsa sob luzes" loading="lazy">
-              </div>
-              <div class="gallery-item" data-src="https://images.unsplash.com/photo-1516450360452-9312f5e86fc7?q=80&w=800">
-                  <img src="https://images.unsplash.com/photo-1516450360452-9312f5e86fc7?q=80&w=400" alt="Debutante dançando com vestido longo" loading="lazy">
-              </div>
-              <div class="gallery-item" data-src="https://images.unsplash.com/photo-1504609773096-104ff2c73ba4?q=80&w=800">
-                  <img src="https://images.unsplash.com/photo-1504609773096-104ff2c73ba4?q=80&w=400" alt="Grupo de formandos fazendo coreografia" loading="lazy">
-              </div>
-              <div class="gallery-item" data-src="https://images.unsplash.com/photo-1533174072545-e8d4aa97edf9?q=80&w=800">
-                  <img src="https://images.unsplash.com/photo-1533174072545-e8d4aa97edf9?q=80&w=400" alt="Noivos finalizando dança com pose romântica" loading="lazy">
-              </div>
-              <div class="gallery-item" data-src="https://images.unsplash.com/photo-1515187029135-18ee286d815b?q=80&w=800">
-                  <img src="https://images.unsplash.com/photo-1515187029135-18ee286d815b?q=80&w=400" alt="Festa animada com dança coreografada" loading="lazy">
-              </div>
-              <div class="gallery-item" data-src="https://images.unsplash.com/photo-1492684223066-81342ee5ff30?q=80&w=800">
-                  <img src="https://images.unsplash.com/photo-1492684223066-81342ee5ff30?q=80&w=400" alt="Performance artística em evento" loading="lazy">
-              </div>
-          </div>
+    <section id="galeria" class="gallery-section">
+  <div class="container">
+    <h2 class="section-title">Nossa Galeria</h2>
+    
+    <div class="gallery-grid" id="gallery-grid">
+      
+      <div class="gallery-item" data-src="./gallery/Ana 1.webp">
+        <img src="./gallery/Ana 1.webp" alt="Ana dançando valsa" loading="lazy" decoding="async">
+      </div>
+
+      <div class="gallery-item" data-src="./gallery/Ana 2.webp">
+        <img src="./gallery/Ana 2.webp" alt="Ana pose artística" loading="lazy">
+      </div>
+
+      <div class="gallery-item" data-src="./gallery/Bella 1.webp">
+        <img src="./gallery/Bella 1.webp" alt="Bella coreografia grupo" loading="lazy">
+      </div>
+
+      <div class="gallery-item" data-src="./gallery/Bella 2.webp">
+        <img src="./gallery/Bella 2.webp" alt="Bella pose casal" loading="lazy">
+      </div>
+
+      <div class="gallery-item" data-src="./gallery/Bella 3.webp">
+        <img src="./gallery/Bella 3.webp" alt="Bella festa" loading="lazy">
+      </div>
+
+      <div class="gallery-item" data-src="./gallery/Bella 4.webp">
+        <img src="./gallery/Bella 4.webp" alt="Bella performance" loading="lazy">
+      </div>
+
+      <div class="gallery-item hidden" data-src="./gallery/Luiza 1.webp">
+        <img src="./gallery/Luiza 1.webp" alt="Foto extra 7" loading="lazy">
+      </div>
+
+      <div class="gallery-item hidden" data-src="./gallery/Pietra 1.webp">
+        <img src="./gallery/Pietra 1.webp" alt="Foto extra 8" loading="lazy">
+      </div>
+
+      <div class="gallery-item hidden" data-src="./gallery/Pietra 2.webp">
+        <img src="./gallery/Pietra 2.webp" alt="Foto extra 9" loading="lazy">
+      </div>
+
+      <div class="gallery-item hidden" data-src="./gallery/Pietra 3.webp">
+        <img src="./gallery/Pietra 3.webp" alt="Foto extra 10" loading="lazy">
+      </div>
+
+      <div class="gallery-item hidden" data-src="./gallery/Pietra 4.webp">
+        <img src="./gallery/Pietra 4.webp" alt="Foto extra 11" loading="lazy">
+      </div>
+
+      <div class="gallery-item hidden" data-src="./gallery/Pietra MG.webp">
+        <img src="./gallery/Pietra MG.webp" alt="Foto extra 12" loading="lazy">
+      </div>
+
+      <div class="gallery-item hidden" data-src="./gallery/Rafa 1.webp">
+        <img src="./gallery/Rafa 1.webp" alt="Foto extra 13" loading="lazy">
+      </div>
+
+      <div class="gallery-item hidden" data-src="./gallery/Rafa 2.webp">
+        <img src="./gallery/Rafa 2.webp" alt="Foto extra 14" loading="lazy">
+      </div>
+
+      <div class="gallery-item hidden" data-src="./gallery/Valentina 1.webp">
+        <img src="./gallery/Valentina 1.webp" alt="Foto extra 15" loading="lazy">
+      </div>
+
+      <div class="gallery-item hidden" data-src="./gallery/Valentina 2.webp">
+        <img src="./gallery/Valentina 2.webp" alt="Foto extra 16" loading="lazy">
+      </div>
+
+    </div> <div class="gallery-actions" style="text-align: center; margin-top: 3rem;">
+      <button id="btn-load-more" class="btn-primary">Veja mais fotos</button>
+    </div>
+
+  </div>
 
           <div class="instagram-section">
               <h3 class="insta-title"><i class="fab fa-instagram" aria-hidden="true"></i> Siga @ledansecoreografias</h3>

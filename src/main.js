@@ -2,17 +2,57 @@ import './style.css'
 import emailjs from '@emailjs/browser';
 
 // CONFIGURAÇÃO E ENV
-
 const SERVICE_ID = import.meta.env.VITE_EMAILJS_SERVICE_ID;
 const TEMPLATE_ID = import.meta.env.VITE_EMAILJS_TEMPLATE_ID;
 const PUBLIC_KEY = import.meta.env.VITE_EMAILJS_PUBLIC_KEY;
-// const RECAPTCHA_SITE_KEY = '6LexHFUsAAAAALR2NZ9fFYRFwzb4qiw69kcLiQJZ';
 const RECAPTCHA_SITE_KEY = import.meta.env.VITE_RECAPTCHA_SITE_KEY;
 
 emailjs.init(PUBLIC_KEY);
 
-// PADRÃO TELEFONE FORM
+// ========================================
+// UTILITÁRIOS DE PERFORMANCE
+// ========================================
 
+// Debounce para eventos que disparam muito frequentemente
+const debounce = (func, wait) => {
+    let timeout;
+    return function executedFunction(...args) {
+        const later = () => {
+            clearTimeout(timeout);
+            func(...args);
+        };
+        clearTimeout(timeout);
+        timeout = setTimeout(later, wait);
+    };
+};
+
+// Throttle para scroll (mais eficiente que debounce para scroll)
+const throttle = (func, limit) => {
+    let inThrottle;
+    return function(...args) {
+        if (!inThrottle) {
+            func.apply(this, args);
+            inThrottle = true;
+            setTimeout(() => inThrottle = false, limit);
+        }
+    };
+};
+
+// RequestAnimationFrame otimizado para scroll
+let ticking = false;
+const requestTick = (callback) => {
+    if (!ticking) {
+        requestAnimationFrame(() => {
+            callback();
+            ticking = false;
+        });
+        ticking = true;
+    }
+};
+
+// ========================================
+// PADRÃO TELEFONE FORM
+// ========================================
 const phoneInput = document.getElementById('telefone');
 if (phoneInput) {
     phoneInput.addEventListener('input', (e) => {
@@ -24,14 +64,14 @@ if (phoneInput) {
     });
 }
 
-
+// ========================================
 // VIDEO AUTOPLAY
-
+// ========================================
 const heroVideo = document.querySelector('.hero-video');
 if (heroVideo) {
     const playVideo = () => {
         if (heroVideo.paused) {
-            heroVideo.play().catch(e => console.log("Autoplay bloqueado (aguardando interação):", e));
+            heroVideo.play().catch(e => console.log("Autoplay bloqueado:", e));
         }
     };
     window.addEventListener('load', playVideo);
@@ -41,8 +81,9 @@ if (heroVideo) {
     }, { passive: true });
 }
 
-// LIGHTBOX COM NAVEGAÇÃO
-
+// ========================================
+// LIGHTBOX COM NAVEGAÇÃO (Otimizado)
+// ========================================
 const lightbox = document.getElementById('lightbox');
 const lightboxImg = document.getElementById('lightbox-img');
 const closeBtn = document.querySelector('.close-lightbox');
@@ -96,8 +137,9 @@ if(lightbox) {
     });
 }
 
+// ========================================
 // FORMULÁRIO
-
+// ========================================
 const contactForm = document.getElementById('contactForm');
 
 if (contactForm) {
@@ -107,7 +149,6 @@ if (contactForm) {
         const originalText = btn.textContent;
         
         try {
-            console.log("1. Iniciando processo (V2)..."); 
             btn.textContent = 'Processando...';
             btn.disabled = true;
 
@@ -117,7 +158,6 @@ if (contactForm) {
                 if (typeof grecaptcha !== 'undefined') {
                     await new Promise(r => grecaptcha.ready(r));
                     token = await grecaptcha.execute('6LexHFUsAAAAALR2NZ9fFYRFwzb4qiw69kcLiQJZ', {action: 'submit'});
-                    console.log("Token Google gerado:", token);
                 } else {
                     throw new Error('Grecaptcha undefined');
                 }
@@ -163,8 +203,9 @@ if (contactForm) {
     });
 }
 
+// ========================================
 // MOBILE MENU
-
+// ========================================
 const mobileBtn = document.querySelector('.mobile-menu-btn');
 const navMenu = document.querySelector('.nav-menu');
 const navLinks = document.querySelectorAll('.nav-menu a');
@@ -194,8 +235,9 @@ if (mobileBtn && navMenu) {
     });
 }
 
+// ========================================
 // WHATSAPP
-
+// ========================================
 const btnZap = document.querySelector('#btn-whatsapp');
 if(btnZap) {
     btnZap.addEventListener('click', () => {
@@ -203,8 +245,9 @@ if(btnZap) {
     });
 }
 
-// INSTAGRAM
-
+// ========================================
+// INSTAGRAM (OTIMIZADO)
+// ========================================
 const instagramContainer = document.getElementById('insta-feed');
 
 if (instagramContainer) {
@@ -216,14 +259,13 @@ if (instagramContainer) {
             instagramContainer.innerHTML = '';
             
             if (data.data) {
-                data.data.forEach(post => {
-                    const link = document.createElement('a');
-                    link.className = "insta-item reveal";
-                    link.href = post.permalink; 
-                    link.target = "_blank"; 
-                    link.rel = "noopener";
+                // Usar DocumentFragment para melhor performance
+                const fragment = document.createDocumentFragment();
+                
+                data.data.slice(0, 6).forEach(post => {
+                    const div = document.createElement('div');
+                    div.className = 'insta-item reveal';
                     
-                    // LÓGICA DE MÍDIA
                     if (post.media_type === 'VIDEO') {
                         const video = document.createElement('video');
                         video.src = post.media_url;
@@ -231,32 +273,62 @@ if (instagramContainer) {
                         video.muted = true;
                         video.loop = true;
                         video.playsInline = true;
+                        video.preload = 'none'; // Não carregar até necessário
+                        video.classList.add('insta-video');
                         
-                        link.addEventListener('mouseenter', () => {
-                            video.play().catch(e => console.log("Aguardando carregamento..."));
-                        });
+                        // Usar Intersection Observer para vídeos (mais eficiente)
+                        const videoObserver = new IntersectionObserver((entries) => {
+                            entries.forEach(entry => {
+                                if (entry.isIntersecting) {
+                                    video.preload = 'metadata';
+                                }
+                            });
+                        }, { rootMargin: '50px' });
                         
-                        link.addEventListener('mouseleave', () => {
+                        videoObserver.observe(div);
+                        
+                        // Usar event delegation seria melhor, mas mantendo sua lógica
+                        let hoverTimeout;
+                        div.addEventListener('mouseenter', () => {
+                            hoverTimeout = setTimeout(() => {
+                                video.play().catch(e => console.log("Aguardando carregamento..."));
+                            }, 100); // Pequeno delay para evitar plays acidentais
+                        }, { passive: true });
+                        
+                        div.addEventListener('mouseleave', () => {
+                            clearTimeout(hoverTimeout);
                             video.pause();
                             video.currentTime = 0;
-                        });
-
-                        link.appendChild(video);
-
+                        }, { passive: true });
+                        
+                        const playIcon = document.createElement('i');
+                        playIcon.className = 'fas fa-play';
+                        playIcon.style.cssText = 'position:absolute; top:50%; left:50%; transform:translate(-50%,-50%); color:white; opacity:0.7; pointer-events:none;';
+                        
+                        div.appendChild(video);
+                        div.appendChild(playIcon);
+                        
                     } else {
                         const img = document.createElement('img');
                         img.src = post.media_url;
                         img.alt = post.caption ? post.caption.slice(0, 80) : 'Instagram LeDanse';
                         img.loading = "lazy";
+                        img.decoding = "async";
                         
-                        link.appendChild(img);
+                        div.appendChild(img);
                     }
                     
-                    instagramContainer.appendChild(link);
+                    div.addEventListener('click', () => window.open(post.permalink, '_blank'));
+                    fragment.appendChild(div);
                 });
-
+                
+                instagramContainer.appendChild(fragment);
+                
+                // Observar elementos adicionados com RAF para melhor performance
                 requestAnimationFrame(() => {
-                    document.querySelectorAll('.insta-item').forEach(el => revealObserver.observe(el));
+                    document.querySelectorAll('#insta-feed .insta-item').forEach(el => {
+                        revealObserver.observe(el);
+                    });
                 });
             }
         })
@@ -266,47 +338,139 @@ if (instagramContainer) {
         });
 }
 
-// SCROLL
-
+// ========================================
+// SCROLL REVEAL (OTIMIZADO)
+// ========================================
 const revealElements = document.querySelectorAll('.service-card, .section-title, .about-text, .gallery-item, .contact-container');
 revealElements.forEach(el => el.classList.add('reveal'));
 
+// Intersection Observer com configurações otimizadas
 const revealObserver = new IntersectionObserver((entries) => {
     entries.forEach(entry => {
         if (entry.isIntersecting) { 
-            entry.target.classList.add('active'); 
+            // Usar RAF para animações suaves
+            requestAnimationFrame(() => {
+                entry.target.classList.add('active');
+            });
             revealObserver.unobserve(entry.target); 
         }
     });
-}, { threshold: 0.1 });
+}, { 
+    threshold: 0.1,
+    rootMargin: '0px 0px -50px 0px' // Começar animação um pouco antes
+});
 
 revealElements.forEach(el => revealObserver.observe(el));
 
-document.addEventListener('scroll', () => {
-    const scroll = window.scrollY;
-    const heroContent = document.querySelector('.hero-content');
-    if (heroContent && scroll < window.innerHeight) {
-        heroContent.style.transform = `translateY(${scroll * 0.4}px)`;
-        heroContent.style.opacity = 1 - (scroll / 600);
-    }
-});
+// ========================================
+// PARALLAX HERO (OTIMIZADO COM THROTTLE + RAF)
+// ========================================
+const heroContent = document.querySelector('.hero-content');
 
-// SCROLL TO TOP BUTTON
+if (heroContent) {
+    const updateParallax = throttle(() => {
+        requestTick(() => {
+            const scroll = window.scrollY;
+            if (scroll < window.innerHeight) {
+                // Usar transform3d e will-change para GPU acceleration
+                heroContent.style.transform = `translate3d(0, ${scroll * 0.4}px, 0)`;
+                heroContent.style.opacity = Math.max(0, 1 - (scroll / 600));
+            }
+        });
+    }, 16); // ~60fps
 
+    document.addEventListener('scroll', updateParallax, { passive: true });
+}
+
+// ========================================
+// SCROLL TO TOP BUTTON (OTIMIZADO)
+// ========================================
 const scrollTopBtn = document.createElement('button');
 scrollTopBtn.innerHTML = '<i class="fas fa-arrow-up"></i>';
 scrollTopBtn.className = 'scroll-top-btn';
 scrollTopBtn.ariaLabel = "Voltar ao topo";
 document.body.appendChild(scrollTopBtn);
 
-window.addEventListener('scroll', () => {
-    if (window.scrollY > 300) {
-        scrollTopBtn.classList.add('visible');
-    } else {
-        scrollTopBtn.classList.remove('visible');
-    }
-});
+const toggleScrollBtn = throttle(() => {
+    requestTick(() => {
+        if (window.scrollY > 300) {
+            scrollTopBtn.classList.add('visible');
+        } else {
+            scrollTopBtn.classList.remove('visible');
+        }
+    });
+}, 100);
+
+window.addEventListener('scroll', toggleScrollBtn, { passive: true });
 
 scrollTopBtn.addEventListener('click', () => {
     window.scrollTo({ top: 0, behavior: 'smooth' });
 });
+
+// ========================================
+// EFEITO DE DIGITAÇÃO
+// ========================================
+document.addEventListener("DOMContentLoaded", () => {
+    const textTitle1 = "Tornando seu evento";
+    const textTitle2 = "ainda mais especial!";
+    const textSubtitle = "Coreografias personalizadas para casamentos, formaturas e 15 anos. Duas mulheres, muita arte e a dança que você sonha.";
+    
+    const typingSpeed = 50;
+    const subtitleSpeed = 30;
+
+    const typeWriter = (elementId, text, speed) => {
+        return new Promise((resolve) => {
+            const element = document.getElementById(elementId);
+            if (!element) return resolve();
+            
+            element.innerHTML = "";
+            let i = 0;
+
+            function type() {
+                if (i < text.length) {
+                    element.innerHTML += text.charAt(i);
+                    i++;
+                    setTimeout(type, speed);
+                } else {
+                    resolve();
+                }
+            }
+            type();
+        });
+    };
+
+    const startAnimation = async () => {
+        await typeWriter("type-title-1", textTitle1, typingSpeed);
+        await typeWriter("type-title-2", textTitle2, typingSpeed);
+        await new Promise(r => setTimeout(r, 300));
+        await typeWriter("type-subtitle", textSubtitle, subtitleSpeed);
+    };
+
+    startAnimation();
+});
+
+// ========================================
+// BOTÃO VEJA MAIS (OTIMIZADO)
+// ========================================
+const btnLoadMore = document.getElementById('btn-load-more');
+
+if (btnLoadMore) {
+    btnLoadMore.addEventListener('click', () => {
+        const hiddenItems = document.querySelectorAll('.gallery-item.hidden');
+        
+        // Usar DocumentFragment para melhor performance
+        requestAnimationFrame(() => {
+            hiddenItems.forEach((item, index) => {
+                setTimeout(() => {
+                    requestAnimationFrame(() => {
+                        item.classList.remove('hidden');
+                        item.classList.add('fade-in');
+                        revealObserver.observe(item);
+                    });
+                }, index * 50);
+            });
+        });
+
+        btnLoadMore.style.display = 'none';
+    });
+}
