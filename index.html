@@ -8,10 +8,8 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link rel="preconnect" href="https://graph.instagram.com">
     <link rel="preconnect" href="https://www.google.com">
-    <link rel="preload" as="video" href="/path/to/hero-video.mp4" type="video/mp4">
-    <link rel="preload" href="/fonts/primary-font.woff2" as="font" type="font/woff2" crossorigin>
+    <link rel="preload" as="video" href="/hero_video.webm" type="video/webm">
     <link rel="preconnect" href="https://api.emailjs.com">
-    <link rel="preconnect" href="https://www.google.com">
     <link rel="preconnect" href="https://www.gstatic.com" crossorigin>
 
     <script async src="https://www.googletagmanager.com/gtag/js?id=G-66DV98JQZG"></script>
@@ -68,15 +66,14 @@
     <link rel="stylesheet" href="src/style.css">
 
     <script src="https://www.google.com/recaptcha/api.js?render=6LexHFUsAAAAALR2NZ9fFYRFwzb4qiw69kcLiQJZ" defer></script>
-    <script src="https://kit.fontawesome.com/your-kit.js" defer crossorigin="anonymous"></script>
     <script src="https://unpkg.com/smoothscroll-polyfill/dist/smoothscroll.min.js"></script>
-<script>
-  window.onload = function() {
-    if (window.smoothscroll) {
-      window.smoothscroll.polyfill();
-    }
-  };
-</script>
+    <script>
+      window.onload = function() {
+        if (window.smoothscroll) {
+          window.smoothscroll.polyfill();
+        }
+      };
+    </script>
 
   </head>
   <body>
@@ -109,82 +106,182 @@
 
         <section id="home" class="hero">
           <video autoplay muted loop playsinline class="hero-video" poster="/poster.webp" preload="metadata">
-              <source src="/pista_rafa.mp4" type="video/mp4">
+              <source src="/hero_video.webm" type="video/webm">
               Seu navegador não suporta vídeos HTML5.
           </video>
           <div class="hero-overlay"></div>
 
             <div class="hero-content">
-  <h1>
-    <span id="type-title-1"></span><br>
-    <span id="type-title-2" class="text-gradient"></span>
-  </h1>
-  
-  <p id="type-subtitle"></p>
+              <h1>
+                <span id="type-title-1"></span><br>
+                <span id="type-title-2" class="text-gradient"></span>
+              </h1>
+              
+              <p>Coreografias personalizadas para eventos sociais e corporativos. <br> Duas mulheres, muita arte e a dança que você sonha.</p>
 
-  <div class="cta-group">
-    <button id="btn-whatsapp" aria-label="Conversar no WhatsApp">Falar no WhatsApp</button>
-    <a href="#servicos" class="link-secondary">Ver Serviços</a>
-  </div>
+              <div class="cta-group">
+                <button id="btn-whatsapp" aria-label="Conversar no WhatsApp">Falar no WhatsApp</button>
+                <a href="#servicos" class="link-secondary">Ver Serviços</a>
+              </div>
             </div>
         </section>
 
         <section id="servicos" class="section">
           <h2 class="section-title">O que fazemos</h2>
           <div class="services-grid">
-    <article class="service-card">
-        <div class="service-header">
-            <div class="service-icon"><i class="fas fa-ring" aria-hidden="true"></i></div>
-            <h3>Casamentos</h3>
-        </div>
-        <p class="service-desc">Transforme sua história de amor em movimento. Do clássico ao moderno, criamos o momento perfeito.</p>
-        
-        <ul class="service-features">
-            <li><i class="fas fa-check"></i> Valsa Clássica ou Maluca</li>
-            <li><i class="fas fa-check"></i> Dança dos Padrinhos</li>
-            <li><i class="fas fa-check"></i> Edição Musical Inclusa</li>
-            <li><i class="fas fa-check"></i> Ensaios Flexíveis</li>
-        </ul>
+            
+            <article class="service-card">
+                <div class="service-header">
+                    <div class="service-icon"><i class="fas fa-ring" aria-hidden="true"></i></div>
+                    <h3>Casamentos</h3>
+                </div>
+                <p class="service-desc">Transforme sua história de amor em movimento. Do clássico ao moderno, criamos o momento perfeito.</p>
+                
+                <ul class="service-features">
+                    <li><i class="fas fa-check"></i> Dança dos Noivos</li>
+                    <li><i class="fas fa-check"></i> Dança Madrinhas e Padrinhos</li>
+                    <li><i class="fas fa-check"></i> Diversos Estilos Musicais</li>
+                </ul>
 
-        <a href="#contato" class="btn-service" aria-label="Orçamento para Casamento">Solicitar Orçamento</a>
-    </article>
+                <div class="card-actions">
+                    <button class="btn-learn-more" data-modal="modal-casamento">Saiba mais</button>
+                    <a href="#contato" class="btn-service" aria-label="Orçamento para Casamento">Solicitar Orçamento</a>
+                </div>
+            </article>
 
-    <article class="service-card featured">
-        <div class="featured-badge">Mais Pedido</div>
-        <div class="service-header">
-            <div class="service-icon"><i class="fas fa-crown" aria-hidden="true"></i></div>
-            <h3>15 Anos & Formaturas</h3>
-        </div>
-        <p class="service-desc">Surpreenda seus convidados com uma abertura de pista impactante e cheia de energia.</p>
-        
-        <ul class="service-features">
-            <li><i class="fas fa-check"></i> Abertura de Pista Solo/Grupo</li>
-            <li><i class="fas fa-check"></i> Mix de Ritmos (Funk, Pop, etc)</li>
-            <li><i class="fas fa-check"></i> Valsa com Pai/Padrinho</li>
-            <li><i class="fas fa-check"></i> Coreografia Viral TikTok</li>
-        </ul>
+            <article class="service-card featured">
+                <div class="featured-badge">Mais Pedido</div>
+                <div class="service-header">
+                    <div class="service-icon"><i class="fas fa-crown" aria-hidden="true"></i></div>
+                    <h3>15 Anos & Formaturas</h3>
+                </div>
+                <p class="service-desc">Surpreenda seus convidados com uma abertura de pista impactante e cheia de energia.</p>
+                
+                <ul class="service-features">
+                    <li><i class="fas fa-check"></i> Abertura de Pista</li>
+                    <li><i class="fas fa-check"></i> Valsa com o Pai / Valsa com o Príncipe / Dança com a Mãe</li>
+                    <li><i class="fas fa-check"></i> Dança do Espelho</li>
+                </ul>
 
-        <a href="#contato" class="btn-service" aria-label="Orçamento para 15 Anos">Solicitar Orçamento</a>
-    </article>
+                <div class="card-actions">
+                    <button class="btn-learn-more" data-modal="modal-15anos">Saiba mais</button>
+                    <a href="#contato" class="btn-service" aria-label="Orçamento para 15 Anos">Solicitar Orçamento</a>
+                </div>
+            </article>
 
-    <article class="service-card">
-        <div class="service-header">
-            <div class="service-icon"><i class="fas fa-music" aria-hidden="true"></i></div>
-            <h3>Flashmobs & Shows</h3>
-        </div>
-        <p class="service-desc">Quer algo fora do comum? Criamos intervenções artísticas e surpresas inesquecíveis.</p>
-        
-        <ul class="service-features">
-            <li><i class="fas fa-check"></i> Flashmob Surpresa</li>
-            <li><i class="fas fa-check"></i> Pedidos de Casamento</li>
-            <li><i class="fas fa-check"></i> Bailarinos Profissionais</li>
-            <li><i class="fas fa-check"></i> Animação de Pista</li>
-        </ul>
+            <article class="service-card">
+                <div class="service-header">
+                    <div class="service-icon"><i class="fas fa-music" aria-hidden="true"></i></div>
+                    <h3>Flashmobs &<br>Eventos Corporativos</h3>
+                </div>
+                <p class="service-desc">Quer algo fora do comum? Criamos intervenções artísticas e surpresas inesquecíveis.</p>
+                
+                <ul class="service-features">
+                    <li><i class="fas fa-check"></i> Flashmob Surpresa</li>
+                    <li><i class="fas fa-check"></i> Pedidos de Casamento</li>
+                    <li><i class="fas fa-check"></i> Animação de Pista</li>
+                </ul>
 
-        <a href="#contato" class="btn-service" aria-label="Orçamento para Flashmobs">Solicitar Orçamento</a>
-    </article>
-</div>
+                <div class="card-actions">
+                    <button class="btn-learn-more" data-modal="modal-flashmob">Saiba mais</button>
+                    <a href="#contato" class="btn-service" aria-label="Orçamento para Flashmobs">Solicitar Orçamento</a>
+                </div>
+            </article>
+          </div>
+          
+          <div class="common-features-container">
+            <h3 class="features-title">Diferenciais LeDanse</h3>
+            <div class="features-grid">
+                
+                <div class="feature-item">
+                    <i class="fas fa-clock"></i> <h4>Agenda Flexível</h4>
+                    <p>A vida é corrida? Agendamos os ensaios de acordo com a sua rotina e disponibilidade de horários.</p>
+                </div>
+
+                <div class="feature-item">
+                    <i class="fas fa-clipboard-list"></i> <h4>Pacotes Sob Medida</h4>
+                    <p>O número de aulas é personalizado conforme a quantidade e complexidade das coreografias do seu evento.</p>
+                </div>
+
+                <div class="feature-item">
+                    <i class="fas fa-laptop-house"></i> <h4>Presencial ou Online</h4>
+                    <p>Mora longe ou tem pouco tempo? Oferecemos a opção de ensaios presenciais, online ou formato híbrido.</p>
+                </div>
+
+                <div class="feature-item">
+                    <i class="fas fa-map-marker-alt"></i> <h4>Vamos até Você</h4>
+                    <p>Atendemos em diversas salas parceiras em Porto Alegre ou vamos até sua casa para maior comodidade.</p>
+                </div>
+
+            </div>
+          </div>
         </section>
+
+        <div id="modal-casamento" class="service-modal">
+            <div class="modal-content">
+                <button class="close-modal">&times;</button>
+                <h3>Detalhes para Casamentos</h3>
+                <div class="modal-grid col-2">
+                    <div class="modal-item">
+                        <img src="./gallery/Ana 1.webp" alt="Dança dos Noivos" loading="lazy">
+                        <h4>Dança dos Noivos</h4>
+                        <p>A dança dos noivos é um dos momentos mais esperados do casamento. Ela cria um espaço de conexão entre o casal que celebra o amor nesse dia especial.</p>
+                    </div>
+                    <div class="modal-item">
+                        <img src="./gallery/Bella 2.webp" alt="Dança dos Padrinhos" loading="lazy">
+                        <h4>Dança com Madrinhas e Padrinhos</h4>
+                        <p>Uma das formas de celebrar o casamento é chamando os padrinhos e madrinhas para abrir a pista com os noivos. <br> Seja em forma de duelo, homenagem ou todos juntos, a dança vai criar um espaço de proximidade e diversão.</p>
+                    </div>
+                </div>
+                <a href="#contato" class="btn-modal-cta" onclick="closeAllModals()">Quero meu orçamento</a>
+            </div>
+        </div>
+
+        <div id="modal-15anos" class="service-modal">
+            <div class="modal-content">
+                <button class="close-modal">&times;</button>
+                <h3>Detalhes 15 Anos & Formaturas</h3>
+                <div class="modal-grid col-3">
+                    <div class="modal-item">
+                        <img src="./gallery/Bella 1.webp" alt="Abertura de Pista" loading="lazy">
+                        <h4>Abertura de Pista</h4>
+                        <p>A dança de abertura de pista deixa sua festa de formatura ou sua festa de 15 anos mais divertida e marcante. Seja uma coreografia individual, com os colegas formados ou amigos, o importante é dividir com seus convidados esse momento incrível e deixar seu evento muito mais especial e memorável.</p>
+                    </div>
+                    <div class="modal-item">
+                        <img src="./gallery/Ana 2.webp" alt="Valsa com Pai" loading="lazy">
+                        <h4>Valsa com a Família</h4>
+                        <p>A dança na festa de 15 anos é uma tradição e claro tem que ter
+o estilo da aniversariante. <br> ​Da valsa tradicional ao mix com músicas mais modernas, uma das opções mais famosas é a coreografia com a família.</p>
+                    </div>
+                    <div class="modal-item">
+                        <img src="./gallery/Bella 4.webp" alt="Dança" loading="lazy">
+                        <h4>Dança do Espelho</h4>
+                        <p>A dança do espelho é um momento de representação simbólica na transição da debutante e um dos momentos mais aguardados nas festas de 15 anos. A coreografia envolve a debutante visualizando sua infância - ou seu reflexo - na pequena que está a sua frente, representando uma despedida do passado e um olhar novo para o futuro.</p>
+                    </div>
+                </div>
+                <a href="#contato" class="btn-modal-cta" onclick="closeAllModals()">Quero meu orçamento</a>
+            </div>
+        </div>
+
+        <div id="modal-flashmob" class="service-modal">
+            <div class="modal-content">
+                <button class="close-modal">&times;</button>
+                <h3>Flashmobs & Corporativo</h3>
+                <div class="modal-grid col-2">
+                    <div class="modal-item">
+                        <img src="./gallery/Bella 3.webp" alt="Pedido de Casamento" loading="lazy">
+                        <h4>Flashmobs</h4>
+                        <p>Uma alternativa para transformar o pedido de casamento em uma memória inesquecível é fazer um flashmob com seus amigos, ou com bailarinos profissionais, para eternizar esse momento. Com toda a certeza seu pedido de casamento será lembrado por muitos e muitos anos!</p>
+                    </div>
+                    <div class="modal-item">
+                        <img src="./gallery/Bella 4.webp" alt="Eventos Corporativos" loading="lazy">
+                        <h4>Corporativos</h4>
+                        <p>Como transformar seu evento corporativo em, literalmente, uma grande festa? Levando a dança para ele! Coreografias prontas ensinadas na hora com os maiores hits atemporais irão fazer sua festa, encerramento de ano ou evento serem inesquecíveis!</p>
+                    </div>
+                </div>
+                <a href="#contato" class="btn-modal-cta" onclick="closeAllModals()">Quero meu orçamento</a>
+            </div>
+        </div>
 
         <section id="sobre" class="about-section">
           <div class="about-container">
@@ -208,81 +305,84 @@
           </div>
         </section>
 
-    <section id="galeria" class="gallery-section">
-  <div class="container">
-    <h2 class="section-title">Nossa Galeria</h2>
-    
-    <div class="gallery-grid" id="gallery-grid">
-      
-      <div class="gallery-item" data-src="./gallery/Ana 1.webp">
-        <img src="./gallery/Ana 1.webp" alt="Ana dançando valsa" loading="lazy" decoding="async">
-      </div>
+        <section id="galeria" class="gallery-section">
+          <div class="container">
+            <h2 class="section-title">Nossa Galeria</h2>
+            
+            <div class="gallery-grid" id="gallery-grid">
+              
+              <div class="gallery-item" data-src="./gallery/Ana 1.webp">
+                <img src="./gallery/Ana 1.webp" alt="Ana dançando valsa" loading="lazy" decoding="async">
+              </div>
 
-      <div class="gallery-item" data-src="./gallery/Ana 2.webp">
-        <img src="./gallery/Ana 2.webp" alt="Ana pose artística" loading="lazy">
-      </div>
+              <div class="gallery-item" data-src="./gallery/Ana 2.webp">
+                <img src="./gallery/Ana 2.webp" alt="Ana pose artística" loading="lazy">
+              </div>
 
-      <div class="gallery-item" data-src="./gallery/Bella 1.webp">
-        <img src="./gallery/Bella 1.webp" alt="Bella coreografia grupo" loading="lazy">
-      </div>
+              <div class="gallery-item" data-src="./gallery/Bella 1.webp">
+                <img src="./gallery/Bella 1.webp" alt="Bella coreografia grupo" loading="lazy">
+              </div>
 
-      <div class="gallery-item" data-src="./gallery/Bella 2.webp">
-        <img src="./gallery/Bella 2.webp" alt="Bella pose casal" loading="lazy">
-      </div>
+              <div class="gallery-item" data-src="./gallery/Bella 2.webp">
+                <img src="./gallery/Bella 2.webp" alt="Bella pose casal" loading="lazy">
+              </div>
 
-      <div class="gallery-item" data-src="./gallery/Bella 3.webp">
-        <img src="./gallery/Bella 3.webp" alt="Bella festa" loading="lazy">
-      </div>
+              <div class="gallery-item" data-src="./gallery/Bella 3.webp">
+                <img src="./gallery/Bella 3.webp" alt="Bella festa" loading="lazy">
+              </div>
 
-      <div class="gallery-item" data-src="./gallery/Bella 4.webp">
-        <img src="./gallery/Bella 4.webp" alt="Bella performance" loading="lazy">
-      </div>
+              <div class="gallery-item" data-src="./gallery/Bella 4.webp">
+                <img src="./gallery/Bella 4.webp" alt="Bella performance" loading="lazy">
+              </div>
 
-      <div class="gallery-item hidden" data-src="./gallery/Luiza 1.webp">
-        <img src="./gallery/Luiza 1.webp" alt="Foto extra 7" loading="lazy">
-      </div>
+              <div class="gallery-item hidden extra-item" data-src="./gallery/Luiza 1.webp">
+                <img src="./gallery/Luiza 1.webp" alt="Foto extra 7" loading="lazy">
+              </div>
 
-      <div class="gallery-item hidden" data-src="./gallery/Pietra 1.webp">
-        <img src="./gallery/Pietra 1.webp" alt="Foto extra 8" loading="lazy">
-      </div>
+              <div class="gallery-item hidden extra-item" data-src="./gallery/Pietra 1.webp">
+                <img src="./gallery/Pietra 1.webp" alt="Foto extra 8" loading="lazy">
+              </div>
 
-      <div class="gallery-item hidden" data-src="./gallery/Pietra 2.webp">
-        <img src="./gallery/Pietra 2.webp" alt="Foto extra 9" loading="lazy">
-      </div>
+              <div class="gallery-item hidden extra-item" data-src="./gallery/Pietra 2.webp">
+                <img src="./gallery/Pietra 2.webp" alt="Foto extra 9" loading="lazy">
+              </div>
 
-      <div class="gallery-item hidden" data-src="./gallery/Pietra 3.webp">
-        <img src="./gallery/Pietra 3.webp" alt="Foto extra 10" loading="lazy">
-      </div>
+              <div class="gallery-item hidden extra-item" data-src="./gallery/Pietra 3.webp">
+                <img src="./gallery/Pietra 3.webp" alt="Foto extra 10" loading="lazy">
+              </div>
 
-      <div class="gallery-item hidden" data-src="./gallery/Pietra 4.webp">
-        <img src="./gallery/Pietra 4.webp" alt="Foto extra 11" loading="lazy">
-      </div>
+              <div class="gallery-item hidden extra-item" data-src="./gallery/Pietra 4.webp">
+                <img src="./gallery/Pietra 4.webp" alt="Foto extra 11" loading="lazy">
+              </div>
 
-      <div class="gallery-item hidden" data-src="./gallery/Pietra MG.webp">
-        <img src="./gallery/Pietra MG.webp" alt="Foto extra 12" loading="lazy">
-      </div>
+              <div class="gallery-item hidden extra-item" data-src="./gallery/Pietra MG.webp">
+                <img src="./gallery/Pietra MG.webp" alt="Foto extra 12" loading="lazy">
+              </div>
 
-      <div class="gallery-item hidden" data-src="./gallery/Rafa 1.webp">
-        <img src="./gallery/Rafa 1.webp" alt="Foto extra 13" loading="lazy">
-      </div>
+              <div class="gallery-item hidden extra-item" data-src="./gallery/Rafa 1.webp">
+                <img src="./gallery/Rafa 1.webp" alt="Foto extra 13" loading="lazy">
+              </div>
 
-      <div class="gallery-item hidden" data-src="./gallery/Rafa 2.webp">
-        <img src="./gallery/Rafa 2.webp" alt="Foto extra 14" loading="lazy">
-      </div>
+              <div class="gallery-item hidden extra-item" data-src="./gallery/Rafa 2.webp">
+                <img src="./gallery/Rafa 2.webp" alt="Foto extra 14" loading="lazy">
+              </div>
 
-      <div class="gallery-item hidden" data-src="./gallery/Valentina 1.webp">
-        <img src="./gallery/Valentina 1.webp" alt="Foto extra 15" loading="lazy">
-      </div>
+              <div class="gallery-item hidden extra-item" data-src="./gallery/Valentina 1.webp">
+                <img src="./gallery/Valentina 1.webp" alt="Foto extra 15" loading="lazy">
+              </div>
 
-      <div class="gallery-item hidden" data-src="./gallery/Valentina 2.webp">
-        <img src="./gallery/Valentina 2.webp" alt="Foto extra 16" loading="lazy">
-      </div>
+              <div class="gallery-item hidden extra-item" data-src="./gallery/Valentina 2.webp">
+                <img src="./gallery/Valentina 2.webp" alt="Foto extra 16" loading="lazy">
+              </div>
 
-    </div> <div class="gallery-actions" style="text-align: center; margin-top: 3rem;">
-      <button id="btn-load-more" class="btn-primary">Veja mais fotos</button>
-    </div>
+            </div> 
+            
+            <div class="gallery-actions" style="text-align: center; margin-top: 3rem;">
+              <button id="btn-load-more" class="btn-primary">Veja mais fotos</button>
+              <button id="btn-show-less" class="btn-primary" style="display: none;">Ver menos</button>
+            </div>
 
-  </div>
+          </div>
 
           <div class="instagram-section">
               <h3 class="insta-title"><i class="fab fa-instagram" aria-hidden="true"></i> Siga @ledansecoreografias</h3>
