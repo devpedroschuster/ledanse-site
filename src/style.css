@@ -869,6 +869,18 @@ button:hover {
 }
 .g-recaptcha { display: none; }
 
+/* ESPAÇAMENTO DA SEÇÃO DE CONTATO */
+.contact-section {
+    padding: 0rem 1.5rem 6rem;
+    width: 100%;
+}
+
+@media(min-width: 768px) {
+    .contact-section {
+        padding: 0rem 2rem 8rem; 
+    }
+}
+
 /* FOOTER */
 .footer { background: #0d0d0e; padding: 2rem 2rem 1rem; border-top: 1px solid rgba(255,255,255,0.05); position: relative; z-index: 10; }
 .footer-content { max-width: 1200px; margin: 0 auto 1rem; display: grid; grid-template-columns: 1fr; gap: 2rem; text-align: center; }
