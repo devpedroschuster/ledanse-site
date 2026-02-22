@@ -181,6 +181,16 @@ section, .section, #servicos, #galeria, #sobre, #contato, #home {
   will-change: transform;
 }
 
+@media (max-width: 768px) {
+  .hero-video {
+    height: 100%; /* Garante que preencha a altura do container */
+    width: auto;   /* Permite que a largura se ajuste para não distorcer */
+    min-width: 100%; 
+    object-fit: cover;
+    object-position: center; /* Mantém o meio da colagem sempre visível */
+  }
+}
+
 .hero-overlay {
   position: absolute;
   top: 0;
