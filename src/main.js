@@ -1,6 +1,9 @@
 import './style.css'
 import emailjs from '@emailjs/browser';
+import Swal from 'sweetalert2';
+import 'sweetalert2/dist/sweetalert2.min.css';
 
+// CONFIGURAÇÃO E ENV
 const SERVICE_ID = import.meta.env.VITE_EMAILJS_SERVICE_ID;
 const TEMPLATE_ID = import.meta.env.VITE_EMAILJS_TEMPLATE_ID;
 const PUBLIC_KEY = import.meta.env.VITE_EMAILJS_PUBLIC_KEY;
@@ -8,7 +11,7 @@ const RECAPTCHA_SITE_KEY = import.meta.env.VITE_RECAPTCHA_SITE_KEY;
 
 emailjs.init(PUBLIC_KEY);
 
-// PERFORMANCE
+// UTILITÁRIOS DE PERFORMANCE
 
 const debounce = (func, wait) => {
     let timeout;
@@ -60,7 +63,7 @@ if (phoneInput) {
 // VIDEO AUTOPLAY
 
 const heroVideo = document.querySelector('.hero-video');
-if (heroVideo) {
+if (heroVideo && heroVideo.tagName === 'VIDEO') {
     const playVideo = () => {
         if (heroVideo.paused) {
             heroVideo.play().catch(e => console.log("Autoplay bloqueado:", e));
@@ -128,7 +131,7 @@ if(lightbox) {
     });
 }
 
-// FORMULÁRIO
+// FORMULÁRIO COM SWEETALERT E GA4
 
 const contactForm = document.getElementById('contactForm');
 
@@ -144,16 +147,11 @@ if (contactForm) {
 
             let token = null;
 
-            try {
-                if (typeof grecaptcha !== 'undefined') {
-                    await new Promise(r => grecaptcha.ready(r));
-                    token = await grecaptcha.execute('6LexHFUsAAAAALR2NZ9fFYRFwzb4qiw69kcLiQJZ', {action: 'submit'});
-                } else {
-                    throw new Error('Grecaptcha undefined');
-                }
-            } catch (err) {
-                console.warn("⚠️ Google falhou/bloqueado. Usando BYPASS DE TESTE.");
-                token = 'BYPASS_DEV_MODE'; 
+            if (typeof grecaptcha !== 'undefined') {
+                await new Promise(r => grecaptcha.ready(r));
+                token = await grecaptcha.execute(RECAPTCHA_SITE_KEY, {action: 'submit'});
+            } else {
+                throw new Error('Serviço de segurança indisponível. Recarregue a página e tente novamente.');
             }
 
             const validation = await fetch('/api/validate_captcha', {
@@ -165,7 +163,7 @@ if (contactForm) {
             const result = await validation.json();
 
             if (!validation.ok || !result.success) {
-                throw new Error('Segurança recusou o envio.');
+                throw new Error('Falha na validação de segurança.');
             }
 
             btn.textContent = 'Enviando email...';
@@ -178,18 +176,54 @@ if (contactForm) {
                 mensagem: document.getElementById('mensagem').value
             };
 
-            await emailjs.send("service_xg1058k", "template_yczebv8", templateParams);
+            await emailjs.send(SERVICE_ID, TEMPLATE_ID, templateParams);
             
-            alert('✅ Sucesso! Mensagem enviada.');
+            Swal.fire({
+                title: 'Mensagem Enviada!',
+                text: 'Entraremos em contato em breve para conversar sobre o seu evento.',
+                icon: 'success',
+                confirmButtonColor: '#F9A5CB',
+                background: '#161925',
+                color: '#fff'
+            });
+
+            if (typeof gtag === 'function') {
+                gtag('event', 'generate_lead', {
+                    event_category: 'Formulário',
+                    event_label: 'Orçamento Enviado',
+                    tipo_evento: templateParams.tipo_evento
+                });
+            }
+
             contactForm.reset();
 
         } catch (error) {
             console.error(error);
-            alert('❌ Erro: ' + error.message);
+            Swal.fire({
+                title: 'Ops! Algo deu errado.',
+                text: error.message || 'Não foi possível enviar sua mensagem no momento.',
+                icon: 'error',
+                confirmButtonColor: '#F9A5CB',
+                background: '#161925',
+                color: '#fff'
+            });
         } finally {
             btn.textContent = originalText;
             btn.disabled = false;
         }
+    });
+}
+
+// RASTREAMENTO GA4 - BOTÃO WHATSAPP
+
+const btnZap = document.querySelector('#btn-whatsapp');
+
+if(btnZap) {
+    btnZap.addEventListener('click', () => {
+        if (typeof gtag === 'function') {
+            gtag('event', 'click_whatsapp', { event_category: 'Contato' });
+        }
+        window.open('https://wa.me/5551999598622', '_blank');
     });
 }
 
@@ -224,14 +258,26 @@ if (mobileBtn && navMenu) {
     });
 }
 
-// WHATSAPP
+// SCROLL REVEAL
 
-const btnZap = document.querySelector('#btn-whatsapp');
-if(btnZap) {
-    btnZap.addEventListener('click', () => {
-        window.open('https://wa.me/5551999598622', '_blank');
+const revealElements = document.querySelectorAll('.service-card, .section-title, .about-text, .gallery-item, .contact-container');
+revealElements.forEach(el => el.classList.add('reveal'));
+
+const revealObserver = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+        if (entry.isIntersecting) { 
+            requestAnimationFrame(() => {
+                entry.target.classList.add('active');
+            });
+            revealObserver.unobserve(entry.target); 
+        }
     });
-}
+}, { 
+    threshold: 0.1,
+    rootMargin: '0px 0px -50px 0px'
+});
+
+revealElements.forEach(el => revealObserver.observe(el));
 
 // INSTAGRAM FEED
 
@@ -282,9 +328,9 @@ if (instagramContainer) {
                 });
                 
                 instagramContainer.appendChild(fragment);
-                    requestAnimationFrame(() => {
+                requestAnimationFrame(() => {
                     document.querySelectorAll('#insta-feed .insta-item').forEach(el => {
-                        revealObserver.observe(el);
+                        revealObserver.observe(el); // Agora o revealObserver existe!
                     });
                 });
             }
@@ -294,27 +340,6 @@ if (instagramContainer) {
             instagramContainer.innerHTML = '<div style="text-align:center;padding:20px"><a href="https://instagram.com/ledansecoreografias" target="_blank" class="btn-service">Ver Instagram</a></div>';
         });
 }
-
-// SCROLL REVEAL
-
-const revealElements = document.querySelectorAll('.service-card, .section-title, .about-text, .gallery-item, .contact-container');
-revealElements.forEach(el => el.classList.add('reveal'));
-
-const revealObserver = new IntersectionObserver((entries) => {
-    entries.forEach(entry => {
-        if (entry.isIntersecting) { 
-            requestAnimationFrame(() => {
-                entry.target.classList.add('active');
-            });
-            revealObserver.unobserve(entry.target); 
-        }
-    });
-}, { 
-    threshold: 0.1,
-    rootMargin: '0px 0px -50px 0px'
-});
-
-revealElements.forEach(el => revealObserver.observe(el));
 
 // PARALLAX HERO
 
@@ -441,6 +466,7 @@ if (btnLoadMore && btnShowLess) {
         }
     });
 }
+
 // SISTEMA MODAL (SAIBA MAIS - SERVICE)
 
 document.querySelectorAll('.btn-learn-more').forEach(btn => {
@@ -478,3 +504,23 @@ document.addEventListener('keydown', (e) => {
         closeAllModals();
     }
 });
+
+// LGPD COOKIE CONSENT
+
+const cookieBanner = document.getElementById('cookie-banner');
+const acceptCookiesBtn = document.getElementById('accept-cookies');
+
+if (cookieBanner && acceptCookiesBtn) {
+    const hasAcceptedCookies = localStorage.getItem('ledanse_cookies_accepted');
+
+    if (!hasAcceptedCookies) {
+        setTimeout(() => {
+            cookieBanner.classList.add('show');
+        }, 2000);
+    }
+
+    acceptCookiesBtn.addEventListener('click', () => {
+        localStorage.setItem('ledanse_cookies_accepted', 'true');
+        cookieBanner.classList.remove('show');
+    });
+}

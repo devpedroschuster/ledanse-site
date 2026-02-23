@@ -990,3 +990,49 @@ address { font-style: normal; }
   .lightbox-prev { left: 10px; } 
   .lightbox-next { right: 10px; }
 }
+
+/* BANNER DE COOKIES LGPD */
+.cookie-banner {
+    position: fixed;
+    bottom: -100px;
+    left: 0;
+    width: 100%;
+    background: rgba(14, 16, 25, 0.95);
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    border-top: 1px solid var(--accent-color);
+    padding: 1.5rem;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 1rem;
+    z-index: 9999;
+    transition: bottom 0.4s ease-in-out;
+    box-shadow: 0 -10px 30px rgba(0,0,0,0.5);
+}
+
+.cookie-banner.show {
+    bottom: 0;
+}
+
+.cookie-banner p {
+    font-size: 0.9rem;
+    color: #d1d1d1;
+    text-align: center;
+    max-width: 800px;
+    margin: 0;
+}
+
+.cookie-banner a {
+    color: var(--accent-color);
+}
+
+@media(min-width: 768px) {
+    .cookie-banner {
+        flex-direction: row;
+        justify-content: space-between;
+        padding: 1rem 2rem;
+    }
+    .cookie-banner p { text-align: left; }
+}
