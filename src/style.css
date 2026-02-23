@@ -998,8 +998,8 @@ address { font-style: normal; }
     left: 0;
     width: 100%;
     background: rgba(14, 16, 25, 0.95);
+   -webkit-backdrop-filter: blur(10px);
     backdrop-filter: blur(10px);
-    -webkit-backdrop-filter: blur(10px);
     border-top: 1px solid var(--accent-color);
     padding: 1.5rem;
     display: flex;
