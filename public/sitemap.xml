@@ -2,6 +2,20 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
    <url>
       <loc>https://ledansecoreografias.com.br/</loc>
+<image:image>
+      <image:loc>https://ledansecoreografias.com.br/novo-fundo-hero.webp</image:loc>
+      <image:title>Coreografias para Casamentos e 15 Anos em Porto Alegre</image:title>
+    </image:image>
+    
+    <image:image>
+      <image:loc>https://ledansecoreografias.com.br/dupla.webp</image:loc>
+      <image:title>Danielle e Aléxia - Coreógrafas da LeDanse</image:title>
+    </image:image>
+
+    <image:image>
+      <image:loc>https://ledansecoreografias.com.br/gallery/Ana%201.webp</image:loc>
+      <image:title>Dança dos noivos com valsa clássica</image:title>
+    </image:image>
       <lastmod>2026-01-29</lastmod>
       <changefreq>monthly</changefreq>
       <priority>1.0</priority>
