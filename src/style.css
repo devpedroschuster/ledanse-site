@@ -1036,3 +1036,25 @@ address { font-style: normal; }
     }
     .cookie-banner p { text-align: left; }
 }
+
+.cookie-buttons {
+    display: flex;
+    gap: 10px;
+    justify-content: center;
+    margin-top: 15px;
+}
+
+.btn-secondary-cookie {
+    background: transparent;
+    color: var(--text-color);
+    border: 1px solid var(--text-muted);
+    padding: 0.8rem 1.5rem;
+    border-radius: 5px;
+    cursor: pointer;
+    font-weight: 500;
+    transition: all 0.3s ease;
+}
+
+.btn-secondary-cookie:hover {
+    background: rgba(255, 255, 255, 0.1);
+}

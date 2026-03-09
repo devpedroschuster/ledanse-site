@@ -508,19 +508,39 @@ document.addEventListener('keydown', (e) => {
 // LGPD COOKIE CONSENT
 
 const cookieBanner = document.getElementById('cookie-banner');
-const acceptCookiesBtn = document.getElementById('accept-cookies');
+const acceptBtn = document.getElementById('accept-cookies');
+const rejectBtn = document.getElementById('reject-cookies');
 
-if (cookieBanner && acceptCookiesBtn) {
-    const hasAcceptedCookies = localStorage.getItem('ledanse_cookies_accepted');
+const cookiePreference = localStorage.getItem('ledanse_cookie_preference');
 
-    if (!hasAcceptedCookies) {
-        setTimeout(() => {
-            cookieBanner.classList.add('show');
-        }, 2000);
+if (!cookiePreference) {
+    setTimeout(() => {
+        cookieBanner.classList.add('show');
+    }, 500);
+} else if (cookiePreference === 'accepted') {
+    if (typeof window.gtag === 'function') {
+        window.gtag('consent', 'update', {
+            'analytics_storage': 'granted'
+        });
     }
+}
 
-    acceptCookiesBtn.addEventListener('click', () => {
-        localStorage.setItem('ledanse_cookies_accepted', 'true');
+if (acceptBtn) {
+    acceptBtn.addEventListener('click', () => {
+        localStorage.setItem('ledanse_cookie_preference', 'accepted');
+        cookieBanner.classList.remove('show');
+        
+        if (typeof window.gtag === 'function') {
+            window.gtag('consent', 'update', {
+                'analytics_storage': 'granted'
+            });
+        }
+    });
+}
+
+if (rejectBtn) {
+    rejectBtn.addEventListener('click', () => {
+        localStorage.setItem('ledanse_cookie_preference', 'rejected');
         cookieBanner.classList.remove('show');
     });
 }
