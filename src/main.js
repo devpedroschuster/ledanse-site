@@ -11,6 +11,17 @@ const RECAPTCHA_SITE_KEY = import.meta.env.VITE_RECAPTCHA_SITE_KEY;
 
 emailjs.init(PUBLIC_KEY);
 
+// INJEÇÃO DINÂMICA DO reCAPTCHA
+
+const loadRecaptcha = () => {
+    const script = document.createElement('script');
+    script.src = `https://www.google.com/recaptcha/api.js?render=${RECAPTCHA_SITE_KEY}`;
+    script.async = true;
+    script.defer = true;
+    document.head.appendChild(script);
+};
+loadRecaptcha();
+
 // UTILITÁRIOS DE PERFORMANCE
 
 const debounce = (func, wait) => {
@@ -480,7 +491,7 @@ document.querySelectorAll('.btn-learn-more').forEach(btn => {
     });
 });
 
-window.closeAllModals = () => {
+const closeAllModals = () => {
     document.querySelectorAll('.service-modal').forEach(modal => {
         modal.classList.remove('active');
     });
@@ -488,6 +499,10 @@ window.closeAllModals = () => {
 };
 
 document.querySelectorAll('.close-modal').forEach(btn => {
+    btn.addEventListener('click', closeAllModals);
+});
+
+document.querySelectorAll('.btn-modal-cta').forEach(btn => {
     btn.addEventListener('click', closeAllModals);
 });
 

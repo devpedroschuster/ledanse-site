@@ -1,10 +1,41 @@
 import Redis from 'ioredis';
 
+const rateLimit = new Map();
+let cachedData = null;
+let cacheTime = 0;
+const CACHE_DURATION = 3600 * 1000;
+
 export default async function handler(req, res) {
     res.setHeader('Access-Control-Allow-Origin', '*');
     res.setHeader('Access-Control-Allow-Methods', 'GET');
 
     if (req.method === 'OPTIONS') return res.status(200).end();
+
+    const ip = req.headers['x-forwarded-for'] || req.socket?.remoteAddress || 'unknown_ip';
+    const currentTime = Date.now();
+    const windowMs = 60 * 1000;
+    const maxRequests = 10;
+
+    if (rateLimit.has(ip)) {
+        const userLimit = rateLimit.get(ip);
+        if (currentTime - userLimit.startTime < windowMs) {
+            if (userLimit.count >= maxRequests) {
+                console.warn(`🚨 Rate limit excedido no Instagram para o IP: ${ip}`);
+                return res.status(429).json({ error: 'Muitas tentativas. Aguarde um momento.' });
+            }
+            userLimit.count++;
+        } else {
+            rateLimit.set(ip, { count: 1, startTime: currentTime });
+        }
+    } else {
+        rateLimit.set(ip, { count: 1, startTime: currentTime });
+    }
+
+    if (cachedData && (Date.now() - cacheTime < CACHE_DURATION)) {
+        console.log('⚡ Retornando Instagram do Cache de Memória da Vercel!');
+        res.setHeader('Cache-Control', 'public, s-maxage=3600, stale-while-revalidate=86400');
+        return res.status(200).json(cachedData);
+    }
 
     let token = process.env.INITIAL_IG_TOKEN;
     let redis = null;
@@ -17,7 +48,13 @@ export default async function handler(req, res) {
             });
 
             redis.on('error', (err) => {
-                console.warn("⚠️ Redis indisponível (Modo Offline):", err.message);
+                console.error(JSON.stringify({
+                    level: 'ERROR',
+                    type: 'REDIS_CONNECTION_FAILURE',
+                    message: 'Falha no Redis. O sistema entrou em fallback (usando token do .env).',
+                    details: err.message,
+                    timestamp: new Date().toISOString()
+                }));
             });
 
             try {
@@ -44,9 +81,15 @@ export default async function handler(req, res) {
             if (refreshData.access_token) {
                 token = refreshData.access_token;
                 await redis.set('instagram_token', token);
+                
                 const retryResponse = await fetch(`https://graph.instagram.com/me/media?fields=${fields}&limit=6&access_token=${token}`);
                 const retryData = await retryResponse.json();
                 await redis.quit();
+                
+                cachedData = retryData;
+                cacheTime = Date.now();
+                
+                res.setHeader('Cache-Control', 'public, s-maxage=3600, stale-while-revalidate=86400');
                 return res.status(200).json(retryData);
             }
         }
@@ -60,12 +103,15 @@ export default async function handler(req, res) {
             return res.status(200).json({ data: [] });
         }
 
+        cachedData = data;
+        cacheTime = Date.now();
+
         res.setHeader('Cache-Control', 'public, s-maxage=3600, stale-while-revalidate=86400');
         return res.status(200).json(data);
 
     } catch (error) {
         console.error("Erro Geral:", error);
         if (redis) await redis.quit();
-        return res.status(200).json({ data: [] });
+        return res.status(200).json(cachedData ? cachedData : { data: [] });
     }
 }
