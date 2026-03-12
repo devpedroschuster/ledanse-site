@@ -356,7 +356,9 @@ if (instagramContainer) {
 
 const heroContent = document.querySelector('.hero-content');
 
-if (heroContent) {
+const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+if (heroContent && !prefersReducedMotion) {
     const updateParallax = throttle(() => {
         requestTick(() => {
             const scroll = window.scrollY;
