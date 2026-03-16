@@ -94,9 +94,9 @@
       
       <header class="header">
         <nav class="nav-container" aria-label="Menu Principal">
-          <div class="logo">
+          <a href="#home" class="logo" aria-label="Ir para o início">
             LeDanse <span class="logo-subtitle">Coreografias para Eventos</span>
-          </div>
+          </a>
           
           <button class="mobile-menu-btn" aria-label="Abrir Menu de Navegação" aria-expanded="false">
             <i class="fas fa-bars" aria-hidden="true"></i>
@@ -230,19 +230,19 @@
                 <h3>Casamentos</h3>
                 <div class="modal-grid col-3">
                     <div class="modal-item">
-                        <div style="overflow: hidden; border-radius: 10px; margin-bottom: 1rem; height: 180px;">
-            <img src="./service/danca_noivos.webp" alt="Noivos realizando passos de valsa durante casamento em Porto Alegre" loading="lazy" decoding="async" style="transform: scale(1.9); width: 100%; height: 83%; object-fit: cover; object-position: bottom; margin: 0;">
-        </div>
+                        <div class="modal-img-wrapper">
+                            <img src="./service/danca_noivos.webp" alt="Noivos realizando passos de valsa durante casamento em Porto Alegre" loading="lazy" decoding="async" class="modal-img--noivos">
+                        </div>
                         <h4>Dança dos Noivos</h4>
                         <p>A dança dos noivos é um dos momentos mais esperados do casamento. Ela cria um espaço de conexão entre o casal que celebra o amor nesse dia especial.</p>
                     </div>
                     <div class="modal-item">
-                        <img src="./service/padrinhos_e_madrinhas.webp" alt="Dança da aniversariante de 15 anos com seu padrinho" loading="lazy" decoding="async" style="object-position: 80% 50%;">
+                        <img src="./service/padrinhos_e_madrinhas.webp" alt="Dança da aniversariante de 15 anos com seu padrinho" loading="lazy" decoding="async" class="modal-img--madrinhas">
                         <h4>Dança Madrinhas e Padrinhos</h4>
                         <p>Seja em forma de duelo, homenagem ou todos juntos, a dança cria um espaço de proximidade e diversão entre noivos, madrinhas e padrinhos.</p>
                     </div>
                     <div class="modal-item">
-                        <img src="./service/pre_wedding.webp" alt="Casal realizando um ensaio pré-wedding coreografado" loading="lazy" decoding="async" style="object-position: 50% 64%;">
+                        <img src="./service/pre_wedding.webp" alt="Casal realizando um ensaio pré-wedding coreografado" loading="lazy" decoding="async" class="modal-img--prewedding">
                         <h4>Pré-Wedding Coreografado</h4>
                         <p>Criamos momentos especiais para o save the date, ensaio fotográfico ou encontro de madrinhas e padrinhos — movimento que transforma memória em emoção.</p>
                     </div>
@@ -262,19 +262,19 @@
                         <p>Seja uma coreografia individual, com os colegas formados ou amigos, o importante é dividir com seus convidados esse momento incrível e deixar seu evento muito mais divertido,  especial e memorável.</p>
                     </div>
                     <div class="modal-item">
-                      <div style="overflow: hidden; border-radius: 10px; margin-bottom: 1rem; height: 180px;">
-                        <img src="./service/valsas_dancas_familia.webp" alt="Valsa com Pai" loading="lazy" decoding="async" style="transform: scale(1.09);">
+                        <div class="modal-img-wrapper">
+                            <img src="./service/valsas_dancas_familia.webp" alt="Valsa com Pai" loading="lazy" decoding="async" class="modal-img--familia">
                         </div>
                         <h4>Valsas e Danças <br> com a Família</h4>
                         <p>Celebrar os 15 anos com quem sempre esteve ao seu lado. Da valsa tradicional ao mix de músicas mais modernas, a coreografia com o pai, mãe ou príncipe cria um momento cheio de significado e que emociona!</p>
                     </div>
                     <div class="modal-item">
-                        <img src="./service/danca_dos_espelhos.webp" alt="Dança" loading="lazy" decoding="async" style="object-position: 50% 75%;">
+                        <img src="./service/danca_dos_espelhos.webp" alt="Dança" loading="lazy" decoding="async" class="modal-img--espelho">
                         <h4>Dança do Espelho</h4>
                         <p>É um dos momentos mais aguardados da festa de 15 anos: a representação simbólica entre o passado e o futuro. Diante do reflexo da própria história, a debutante se despede da infância com ternura e renasce com um novo olhar para o caminho que vem pela frente.</p>
                     </div>
                 </div>
-<a href="#contato" class="btn-modal-cta">Vamos conversar?</a>
+                <a href="#contato" class="btn-modal-cta">Vamos conversar?</a>
             </div>
         </div>
 
@@ -338,8 +338,8 @@
                 <img src="./gallery/bella_1.webp" alt="Bella coreografia grupo" loading="lazy" decoding="async">
               </div>
 
-              <div class="gallery-item" data-src="./gallery/bella_2.webp">
-                <img src="./gallery/bella_2.webp" alt="Bella pose casal" loading="lazy" decoding="async" style="object-position: 95% 10%;">
+             <div class="gallery-item" data-src="./gallery/bella_2.webp">
+                <img src="./gallery/bella_2.webp" alt="Bella pose casal" loading="lazy" decoding="async" class="gallery-img--bella2">
               </div>
 
               <div class="gallery-item" data-src="./gallery/bella_3.webp">
@@ -433,33 +433,38 @@
                   </div>
               </div>
 
-              <form class="contact-form" id="contactForm">
+              <form class="contact-form" id="contactForm" novalidate>
                   <div class="form-group">
                       <label for="nome">Seu Nome</label>
                       <input type="text" id="nome" name="nome" required placeholder="Ex: Maria Silva" autocomplete="name">
+                      <span class="error-msg"></span>
                   </div>
                   
                   <div class="form-group">
                       <label for="email">Seu Email</label>
                       <input type="email" id="email" name="email" required placeholder="Ex: maria@email.com" autocomplete="email">
+                      <span class="error-msg"></span>
                   </div>
                   <div class="form-group">
                       <label for="telefone">Seu Telefone</label>
                       <input type="tel" id="telefone" name="telefone" required placeholder="Ex: (51) 99999-9999" maxlength="15" autocomplete="tel">
+                      <span class="error-msg"></span>
                   </div>
                   <div class="form-group">
                       <label for="tipo-evento">Tipo de Evento</label>
-                      <select id="tipo-evento" name="tipo-evento">
+                      <select id="tipo-evento" name="tipo-evento" required>
                           <option value="" disabled selected>Selecione o tipo de evento</option>
-                          <option>Casamento</option>
-                          <option>15 Anos</option>
-                          <option>Formatura</option>
-                          <option>Outro</option>
+                          <option value="Casamento">Casamento</option>
+                          <option value="15 Anos">15 Anos</option>
+                          <option value="Formatura">Formatura</option>
+                          <option value="Outro">Outro</option>
                       </select>
+                      <span class="error-msg"></span>
                   </div>
                   <div class="form-group">
                       <label for="mensagem">Mensagem</label>
-                      <textarea id="mensagem" name="mensagem" rows="4" placeholder="Conte um pouco sobre sua ideia..."></textarea>
+                      <textarea id="mensagem" name="mensagem" required rows="4" placeholder="Conte um pouco sobre sua ideia..."></textarea>
+                      <span class="error-msg"></span>
                   </div>
                   
                   <button type="submit">Enviar Mensagem</button>
@@ -498,7 +503,7 @@
             <p>&copy; 2026 LeDanse. Todos os direitos reservados.</p>
             
             <div style="margin-top: 10px; font-size: 0.85rem;">
-                <a href="COLE_O_LINK_DA_POLITICA_AQUI" target="_blank" rel="noopener noreferrer" style="color: var(--accent-color); text-decoration: none; transition: opacity 0.3s;">Política de Privacidade</a> 
+                <a href="https://drive.google.com/file/d/1zS1mfwYK2jUj5R1dqE4cLN0oG2kD6g7p/view" target="_blank" rel="noopener noreferrer" style="color: var(--accent-color); text-decoration: none; transition: opacity 0.3s;">Política de Privacidade</a> 
                 <span style="color: #555; margin: 0 8px;">|</span> 
                 <a href="https://drive.google.com/file/d/1ViszDuJ6ADxdbsPJL-2xc9bB7uoKkC_V/view?usp=sharing" target="_blank" rel="noopener noreferrer" style="color: var(--accent-color); text-decoration: none; transition: opacity 0.3s;">Termos de Uso</a> 
                 <span style="color: #555; margin: 0 8px;">|</span> 
@@ -517,7 +522,7 @@
     </div>
 
     <div id="cookie-banner" class="cookie-banner" role="dialog" aria-live="polite">
-      <p>Usamos cookies para melhorar sua experiência e analisar o tráfego. Ao continuar navegando, você concorda com nossa <a href="COLE_O_LINK_DA_POLITICA_AQUI" target="_blank">Política de Privacidade</a>.</p>
+      <p>Usamos cookies para melhorar sua experiência e analisar o tráfego. Ao continuar navegando, você concorda com nossa <a href="https://drive.google.com/file/d/1zS1mfwYK2jUj5R1dqE4cLN0oG2kD6g7p/view" target="_blank" rel="noopener noreferrer">Política de Privacidade</a>.</p>
       <div class="cookie-buttons">
         <button id="reject-cookies" class="btn-secondary-cookie">Não Aceito</button>
         <button id="accept-cookies" class="btn-primary">Entendi e Aceito</button>

@@ -12,7 +12,6 @@ const RECAPTCHA_SITE_KEY = import.meta.env.VITE_RECAPTCHA_SITE_KEY;
 emailjs.init(PUBLIC_KEY);
 
 // INJEÇÃO DINÂMICA DO reCAPTCHA
-
 const loadRecaptcha = () => {
     const script = document.createElement('script');
     script.src = `https://www.google.com/recaptcha/api.js?render=${RECAPTCHA_SITE_KEY}`;
@@ -23,7 +22,6 @@ const loadRecaptcha = () => {
 loadRecaptcha();
 
 // UTILITÁRIOS DE PERFORMANCE
-
 const debounce = (func, wait) => {
     let timeout;
     return function executedFunction(...args) {
@@ -58,21 +56,28 @@ const requestTick = (callback) => {
     }
 };
 
-// PADRÃO TELEFONE FORM
-
+// PADRÃO TELEFONE FORM (Dinâmico para Fixo e Celular)
 const phoneInput = document.getElementById('telefone');
 if (phoneInput) {
     phoneInput.addEventListener('input', (e) => {
         let value = e.target.value.replace(/\D/g, ""); 
         if (value.length > 11) value = value.slice(0, 11);
+        
         value = value.replace(/^(\d{2})(\d)/g, "($1) $2");
-        value = value.replace(/(\d)(\d{4})$/, "$1-$2");
+        
+        if (value.length <= 13) {
+            // Formato Fixo: (XX) XXXX-XXXX
+            value = value.replace(/(\d{4})(\d{1,4})$/, "$1-$2");
+        } else {
+            // Formato Celular: (XX) XXXXX-XXXX
+            value = value.replace(/(\d{5})(\d{1,4})$/, "$1-$2");
+        }
+        
         e.target.value = value;
     });
 }
 
 // VIDEO AUTOPLAY
-
 const heroVideo = document.querySelector('.hero-video');
 if (heroVideo && heroVideo.tagName === 'VIDEO') {
     const playVideo = () => {
@@ -87,21 +92,24 @@ if (heroVideo && heroVideo.tagName === 'VIDEO') {
     }, { passive: true });
 }
 
-// LIGHTBOX COM NAVEGAÇÃO
+// LIGHTBOX COM NAVEGAÇÃO E SWIPE NATIVO
 
 const lightbox = document.getElementById('lightbox');
 const lightboxImg = document.getElementById('lightbox-img');
 const closeBtn = document.querySelector('.close-lightbox');
 const prevBtn = document.querySelector('.lightbox-prev');
 const nextBtn = document.querySelector('.lightbox-next');
-const galleryItems = document.querySelectorAll('.gallery-item');
 
 let currentIndex = 0;
-const imagesSrc = Array.from(galleryItems).map(item => item.getAttribute('data-src'));
+let currentVisibleItems = [];
 
-const openLightbox = (index) => {
-    currentIndex = index;
-    lightboxImg.src = imagesSrc[currentIndex];
+const openLightbox = (clickedItem) => {
+    const allVisible = Array.from(document.querySelectorAll('.gallery-item:not(.hidden)'));
+    currentVisibleItems = allVisible.map(el => el.getAttribute('data-src'));
+    
+    currentIndex = currentVisibleItems.indexOf(clickedItem.getAttribute('data-src'));
+    
+    lightboxImg.src = currentVisibleItems[currentIndex];
     lightbox.classList.add('active');
     document.body.style.overflow = 'hidden';
 };
@@ -113,42 +121,122 @@ const closeLightbox = () => {
 
 const nextImage = (e) => {
     if(e) e.stopPropagation();
-    currentIndex = (currentIndex + 1) % imagesSrc.length;
-    lightboxImg.src = imagesSrc[currentIndex];
+    currentIndex = (currentIndex + 1) % currentVisibleItems.length;
+    lightboxImg.src = currentVisibleItems[currentIndex];
 };
 
 const prevImage = (e) => {
     if(e) e.stopPropagation();
-    currentIndex = (currentIndex - 1 + imagesSrc.length) % imagesSrc.length;
-    lightboxImg.src = imagesSrc[currentIndex];
+    currentIndex = (currentIndex - 1 + currentVisibleItems.length) % currentVisibleItems.length;
+    lightboxImg.src = currentVisibleItems[currentIndex];
 };
 
-galleryItems.forEach((item, index) => {
-    item.addEventListener('click', () => openLightbox(index));
+document.querySelectorAll('.gallery-item').forEach(item => {
+    item.addEventListener('click', () => openLightbox(item));
 });
 
 if(lightbox) {
     closeBtn.addEventListener('click', closeLightbox);
     nextBtn.addEventListener('click', nextImage);
     prevBtn.addEventListener('click', prevImage);
+    
     lightbox.addEventListener('click', (e) => {
         if (e.target === lightbox) closeLightbox();
     });
+    
     document.addEventListener('keydown', (e) => {
         if (!lightbox.classList.contains('active')) return;
         if (e.key === 'Escape') closeLightbox();
         if (e.key === 'ArrowRight') nextImage();
         if (e.key === 'ArrowLeft') prevImage();
     });
+
+    let touchStartX = 0;
+    let touchEndX = 0;
+
+    lightbox.addEventListener('touchstart', e => {
+        touchStartX = e.changedTouches[0].screenX;
+    }, { passive: true });
+
+    lightbox.addEventListener('touchend', e => {
+        touchEndX = e.changedTouches[0].screenX;
+        handleSwipe();
+    }, { passive: true });
+
+    const handleSwipe = () => {
+        const swipeThreshold = 50;
+        
+        if (touchEndX < touchStartX - swipeThreshold) {
+            nextImage();
+        }
+        if (touchEndX > touchStartX + swipeThreshold) {
+            prevImage();
+        }
+    };
 }
 
+// VALIDAÇÃO INLINE DE FORMULÁRIO
+const validateField = (field) => {
+    const errorMsg = field.nextElementSibling;
+    let isValid = true;
+    let message = '';
+
+    if (field.value.trim() === '') {
+        isValid = false;
+        message = 'Este campo é obrigatório.';
+    } else if (field.type === 'email' && !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(field.value)) {
+        isValid = false;
+        message = 'Insira um e-mail válido.';
+    } else if (field.type === 'tel' && field.value.replace(/\D/g, '').length < 10) {
+        isValid = false;
+        message = 'Insira um telefone válido com DDD.';
+    }
+
+    if (!isValid) {
+        field.classList.add('input-error');
+        if (errorMsg && errorMsg.classList.contains('error-msg')) {
+            errorMsg.textContent = message;
+            errorMsg.classList.add('visible');
+        }
+    } else {
+        field.classList.remove('input-error');
+        if (errorMsg && errorMsg.classList.contains('error-msg')) {
+            errorMsg.classList.remove('visible');
+        }
+    }
+    return isValid;
+};
+
+// Ativa a validação quando o usuário sai do campo ou digita
+const formInputs = document.querySelectorAll('#contactForm input, #contactForm select, #contactForm textarea');
+formInputs.forEach(input => {
+    input.addEventListener('blur', () => validateField(input));
+    input.addEventListener('input', () => {
+        if (input.classList.contains('input-error')) validateField(input);
+    });
+});
+
 // FORMULÁRIO COM SWEETALERT E GA4
-
 const contactForm = document.getElementById('contactForm');
-
 if (contactForm) {
     contactForm.addEventListener('submit', async (e) => {
         e.preventDefault();
+        
+        // Roda a validação em todos os campos antes de enviar
+        let isFormValid = true;
+        formInputs.forEach(input => {
+            if (!validateField(input)) {
+                isFormValid = false;
+            }
+        });
+
+        // Se houver erro, para por aqui e foca no primeiro campo com erro
+        if (!isFormValid) {
+            const firstError = document.querySelector('.input-error');
+            if (firstError) firstError.focus();
+            return;
+        }
+
         const btn = contactForm.querySelector('button[type="submit"]');
         const originalText = btn.textContent;
         
@@ -207,6 +295,7 @@ if (contactForm) {
             }
 
             contactForm.reset();
+            formInputs.forEach(input => input.classList.remove('input-error'));
 
         } catch (error) {
             console.error(error);
@@ -226,9 +315,7 @@ if (contactForm) {
 }
 
 // RASTREAMENTO GA4 - BOTÃO WHATSAPP
-
 const btnZap = document.querySelector('#btn-whatsapp');
-
 if(btnZap) {
     btnZap.addEventListener('click', () => {
         if (typeof gtag === 'function') {
@@ -239,7 +326,6 @@ if(btnZap) {
 }
 
 // MOBILE MENU
-
 const mobileBtn = document.querySelector('.mobile-menu-btn');
 const navMenu = document.querySelector('.nav-menu');
 const navLinks = document.querySelectorAll('.nav-menu a');
@@ -270,7 +356,6 @@ if (mobileBtn && navMenu) {
 }
 
 // SCROLL REVEAL
-
 const revealElements = document.querySelectorAll('.service-card, .section-title, .about-text, .gallery-item, .contact-container');
 revealElements.forEach(el => el.classList.add('reveal'));
 
@@ -291,9 +376,7 @@ const revealObserver = new IntersectionObserver((entries) => {
 revealElements.forEach(el => revealObserver.observe(el));
 
 // INSTAGRAM FEED
-
 const instagramContainer = document.getElementById('insta-feed');
-
 if (instagramContainer) {
     instagramContainer.innerHTML = Array(6).fill('<div class="skeleton insta-item"></div>').join('');
     
@@ -341,7 +424,7 @@ if (instagramContainer) {
                 instagramContainer.appendChild(fragment);
                 requestAnimationFrame(() => {
                     document.querySelectorAll('#insta-feed .insta-item').forEach(el => {
-                        revealObserver.observe(el); // Agora o revealObserver existe!
+                        revealObserver.observe(el); 
                     });
                 });
             }
@@ -353,9 +436,7 @@ if (instagramContainer) {
 }
 
 // PARALLAX HERO
-
 const heroContent = document.querySelector('.hero-content');
-
 const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 
 if (heroContent && !prefersReducedMotion) {
@@ -372,17 +453,27 @@ if (heroContent && !prefersReducedMotion) {
     document.addEventListener('scroll', updateParallax, { passive: true });
 }
 
-// SCROLL TO TOP BUTTON
-
+// SCROLL EFFECTS (HEADER & TOP BUTTON)
+const header = document.querySelector('.header');
 const scrollTopBtn = document.createElement('button');
 scrollTopBtn.innerHTML = '<i class="fas fa-arrow-up"></i>';
 scrollTopBtn.className = 'scroll-top-btn';
 scrollTopBtn.ariaLabel = "Voltar ao topo";
 document.body.appendChild(scrollTopBtn);
 
-const toggleScrollBtn = throttle(() => {
+const handleScrollEffects = throttle(() => {
     requestTick(() => {
-        if (window.scrollY > 300) {
+        const currentScroll = window.scrollY;
+        
+        if (header) {
+            if (currentScroll > 50) {
+                header.classList.add('scrolled');
+            } else {
+                header.classList.remove('scrolled');
+            }
+        }
+
+        if (currentScroll > 300) {
             scrollTopBtn.classList.add('visible');
         } else {
             scrollTopBtn.classList.remove('visible');
@@ -390,14 +481,13 @@ const toggleScrollBtn = throttle(() => {
     });
 }, 100);
 
-window.addEventListener('scroll', toggleScrollBtn, { passive: true });
+window.addEventListener('scroll', handleScrollEffects, { passive: true });
 
 scrollTopBtn.addEventListener('click', () => {
     window.scrollTo({ top: 0, behavior: 'smooth' });
 });
 
 // EFEITO DE DIGITAÇÃO (HERO)
-
 document.addEventListener("DOMContentLoaded", () => {
     const textTitle1 = "Tornando seu evento";
     const textTitle2 = "ainda mais especial!";
@@ -434,7 +524,6 @@ document.addEventListener("DOMContentLoaded", () => {
 });
 
 // BOTÃO VEJA MAIS / VER MENOS
-
 const btnLoadMore = document.getElementById('btn-load-more');
 const btnShowLess = document.getElementById('btn-show-less');
 
@@ -481,7 +570,6 @@ if (btnLoadMore && btnShowLess) {
 }
 
 // SISTEMA MODAL (SAIBA MAIS - SERVICE)
-
 document.querySelectorAll('.btn-learn-more').forEach(btn => {
     btn.addEventListener('click', (e) => {
         const modalId = btn.getAttribute('data-modal');
@@ -523,7 +611,6 @@ document.addEventListener('keydown', (e) => {
 });
 
 // LGPD COOKIE CONSENT
-
 const cookieBanner = document.getElementById('cookie-banner');
 const acceptBtn = document.getElementById('accept-cookies');
 const rejectBtn = document.getElementById('reject-cookies');
