@@ -56,7 +56,6 @@ const requestTick = (callback) => {
     }
 };
 
-// PADRÃO TELEFONE FORM (Dinâmico para Fixo e Celular)
 const phoneInput = document.getElementById('telefone');
 if (phoneInput) {
     phoneInput.addEventListener('input', (e) => {
@@ -66,10 +65,8 @@ if (phoneInput) {
         value = value.replace(/^(\d{2})(\d)/g, "($1) $2");
         
         if (value.length <= 13) {
-            // Formato Fixo: (XX) XXXX-XXXX
             value = value.replace(/(\d{4})(\d{1,4})$/, "$1-$2");
         } else {
-            // Formato Celular: (XX) XXXXX-XXXX
             value = value.replace(/(\d{5})(\d{1,4})$/, "$1-$2");
         }
         
@@ -107,7 +104,7 @@ const openLightbox = (e) => {
     const clickedItem = e.currentTarget; 
     const dataSrc = clickedItem.getAttribute('data-src');
     
-    if (!dataSrc) return; // Trava de segurança
+    if (!dataSrc) return;
 
     const allVisible = Array.from(document.querySelectorAll('.gallery-item:not(.hidden)'));
     currentVisibleItems = allVisible.map(el => el.getAttribute('data-src')).filter(Boolean);
@@ -218,7 +215,6 @@ const validateField = (field) => {
     return isValid;
 };
 
-// Ativa a validação quando o usuário sai do campo ou digita
 const formInputs = document.querySelectorAll('#contactForm input, #contactForm select, #contactForm textarea');
 formInputs.forEach(input => {
     input.addEventListener('blur', () => validateField(input));
@@ -233,7 +229,6 @@ if (contactForm) {
     contactForm.addEventListener('submit', async (e) => {
         e.preventDefault();
         
-        // Roda a validação em todos os campos antes de enviar
         let isFormValid = true;
         formInputs.forEach(input => {
             if (!validateField(input)) {
@@ -241,7 +236,6 @@ if (contactForm) {
             }
         });
 
-        // Se houver erro, para por aqui e foca no primeiro campo com erro
         if (!isFormValid) {
             const firstError = document.querySelector('.input-error');
             if (firstError) firstError.focus();
