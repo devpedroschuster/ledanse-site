@@ -1060,7 +1060,7 @@ address { font-style: normal; }
 /* BANNER DE COOKIES LGPD */
 .cookie-banner {
     position: fixed;
-    bottom: -100px;
+    bottom: 0; /* Colamos na base */
     left: 0;
     width: 100%;
     background: rgba(14, 16, 25, 0.95);
@@ -1074,12 +1074,13 @@ address { font-style: normal; }
     justify-content: center;
     gap: 1rem;
     z-index: 9999;
-    transition: bottom 0.4s ease-in-out;
+    transform: translateY(120%); 
+    transition: transform 0.4s ease-in-out;
     box-shadow: 0 -10px 30px rgba(0,0,0,0.5);
 }
 
 .cookie-banner.show {
-    bottom: 0;
+    transform: translateY(0); 
 }
 
 .cookie-banner p {
