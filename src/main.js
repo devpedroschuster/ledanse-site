@@ -103,11 +103,18 @@ const nextBtn = document.querySelector('.lightbox-next');
 let currentIndex = 0;
 let currentVisibleItems = [];
 
-const openLightbox = (clickedItem) => {
-    const allVisible = Array.from(document.querySelectorAll('.gallery-item:not(.hidden)'));
-    currentVisibleItems = allVisible.map(el => el.getAttribute('data-src'));
+const openLightbox = (e) => {
+    const clickedItem = e.currentTarget; 
+    const dataSrc = clickedItem.getAttribute('data-src');
     
-    currentIndex = currentVisibleItems.indexOf(clickedItem.getAttribute('data-src'));
+    if (!dataSrc) return; // Trava de segurança
+
+    const allVisible = Array.from(document.querySelectorAll('.gallery-item:not(.hidden)'));
+    currentVisibleItems = allVisible.map(el => el.getAttribute('data-src')).filter(Boolean);
+    
+    currentIndex = currentVisibleItems.indexOf(dataSrc);
+    
+    if (currentIndex === -1) currentIndex = 0;
     
     lightboxImg.src = currentVisibleItems[currentIndex];
     lightbox.classList.add('active');
@@ -115,30 +122,34 @@ const openLightbox = (clickedItem) => {
 };
 
 const closeLightbox = () => {
-    lightbox.classList.remove('active');
-    document.body.style.overflow = 'auto';
+    if (lightbox) {
+        lightbox.classList.remove('active');
+        document.body.style.overflow = 'auto';
+    }
 };
 
 const nextImage = (e) => {
-    if(e) e.stopPropagation();
+    if (e) e.stopPropagation();
+    if (currentVisibleItems.length === 0) return;
     currentIndex = (currentIndex + 1) % currentVisibleItems.length;
-    lightboxImg.src = currentVisibleItems[currentIndex];
+    if (lightboxImg) lightboxImg.src = currentVisibleItems[currentIndex];
 };
 
 const prevImage = (e) => {
-    if(e) e.stopPropagation();
+    if (e) e.stopPropagation();
+    if (currentVisibleItems.length === 0) return;
     currentIndex = (currentIndex - 1 + currentVisibleItems.length) % currentVisibleItems.length;
-    lightboxImg.src = currentVisibleItems[currentIndex];
+    if (lightboxImg) lightboxImg.src = currentVisibleItems[currentIndex];
 };
 
 document.querySelectorAll('.gallery-item').forEach(item => {
-    item.addEventListener('click', () => openLightbox(item));
+    item.addEventListener('click', openLightbox);
 });
 
-if(lightbox) {
-    closeBtn.addEventListener('click', closeLightbox);
-    nextBtn.addEventListener('click', nextImage);
-    prevBtn.addEventListener('click', prevImage);
+if (lightbox) {
+    if (closeBtn) closeBtn.addEventListener('click', closeLightbox);
+    if (nextBtn) nextBtn.addEventListener('click', nextImage);
+    if (prevBtn) prevBtn.addEventListener('click', prevImage);
     
     lightbox.addEventListener('click', (e) => {
         if (e.target === lightbox) closeLightbox();
@@ -164,13 +175,13 @@ if(lightbox) {
     }, { passive: true });
 
     const handleSwipe = () => {
-        const swipeThreshold = 50;
+        const swipeThreshold = 50; 
         
         if (touchEndX < touchStartX - swipeThreshold) {
-            nextImage();
+            nextImage(); 
         }
         if (touchEndX > touchStartX + swipeThreshold) {
-            prevImage();
+            prevImage(); 
         }
     };
 }
