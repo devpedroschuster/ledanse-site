@@ -11,15 +11,21 @@ const RECAPTCHA_SITE_KEY = import.meta.env.VITE_RECAPTCHA_SITE_KEY;
 
 emailjs.init(PUBLIC_KEY);
 
-// INJEÇÃO DINÂMICA DO reCAPTCHA
+// INJEÇÃO DINÂMICA reCAPTCHA
+let recaptchaLoaded = false;
 const loadRecaptcha = () => {
+    if (recaptchaLoaded) return;
+    recaptchaLoaded = true;
     const script = document.createElement('script');
     script.src = `https://www.google.com/recaptcha/api.js?render=${RECAPTCHA_SITE_KEY}`;
     script.async = true;
     script.defer = true;
     document.head.appendChild(script);
 };
-loadRecaptcha();
+
+['scroll', 'touchstart', 'mousemove'].forEach(event => {
+    window.addEventListener(event, loadRecaptcha, { once: true, passive: true });
+});
 
 // UTILITÁRIOS DE PERFORMANCE
 const debounce = (func, wait) => {

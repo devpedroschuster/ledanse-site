@@ -6,12 +6,12 @@
     
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link rel="preconnect" href="https://graph.instagram.com">
-    <link rel="preconnect" href="https://www.google.com">
-    <link rel="preconnect" href="https://api.emailjs.com">
+    <link rel="dns-prefetch" href="https://graph.instagram.com">
+    <link rel="dns-prefetch" href="https://www.google.com">
+    <link rel="dns-prefetch" href="https://api.emailjs.com">
     <link rel="preconnect" href="https://www.gstatic.com" crossorigin>
 
-    <link rel="preload" href="/hero_img.webp" as="image" type="image/webp">
+    <link rel="preload" href="/hero_img.webp" as="image" type="image/webp" fetchpriority="high">
 
     <script async src="https://www.googletagmanager.com/gtag/js?id=G-66DV98JQZG"></script>
     <script>
@@ -116,7 +116,7 @@
       <main id="main-content">
 
         <section id="home" class="hero">
-          <img src="/hero_img.webp" alt="Várias fotos de eventos realizados pela LeDanse (festas de 15 anos, casamentos e eventos corporativos)" class="hero-video">
+          <img src="/hero_img.webp" alt="Várias fotos de eventos realizados pela LeDanse (festas de 15 anos, casamentos e eventos corporativos)" class="hero-video" fetchpriority="high">
           <div class="hero-overlay"></div>
 
             <div class="hero-content">

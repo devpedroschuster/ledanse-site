@@ -15,7 +15,9 @@
       "default",
       {
         "ignore": [
-          "video[playsinline]"
+          "video[playsinline]",
+          "link[fetchpriority]",
+          "img[fetchpriority]"
         ]
       }
     ],
