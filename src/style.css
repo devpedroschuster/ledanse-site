@@ -1137,3 +1137,10 @@ address { font-style: normal; }
 .btn-secondary-cookie:hover {
     background: rgba(255, 255, 255, 0.1);
 }
+
+@media (max-width: 768px) {
+    .fixed-background {
+        background-image: url('/back_triangulo_preto.webp'), linear-gradient(to top, var(--bg-color), #252525);
+        background-blend-mode: normal;
+    }
+}

@@ -449,8 +449,9 @@ if (instagramContainer) {
 // PARALLAX HERO
 const heroContent = document.querySelector('.hero-content');
 const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+const isMobile = window.innerWidth <= 768;
 
-if (heroContent && !prefersReducedMotion) {
+if (heroContent && !prefersReducedMotion && !isMobile) {
     const updateParallax = throttle(() => {
         requestTick(() => {
             const scroll = window.scrollY;
