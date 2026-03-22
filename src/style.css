@@ -953,9 +953,16 @@ button:hover {
 
 .g-recaptcha { display: none; }
 
-/* ESCONDER SELO FLUTUANTE DO RECAPTCHA */
 .grecaptcha-badge {
     visibility: hidden !important;
+}
+
+/* BOTÃO DE ENVIO */
+.contact-form button[type="submit"] {
+    display: block;
+    margin: 0 auto;
+    width: 100%;
+    max-width: 300px;
 }
 
 /* ESPAÇAMENTO DA SEÇÃO DE CONTATO */
@@ -1065,7 +1072,7 @@ address { font-style: normal; }
 /* BANNER DE COOKIES LGPD */
 .cookie-banner {
     position: fixed;
-    bottom: 0; /* Colamos na base */
+    bottom: 0;
     left: 0;
     width: 100%;
     background: rgba(14, 16, 25, 0.95);
