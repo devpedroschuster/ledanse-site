@@ -953,6 +953,11 @@ button:hover {
 
 .g-recaptcha { display: none; }
 
+/* ESCONDER SELO FLUTUANTE DO RECAPTCHA */
+.grecaptcha-badge {
+    visibility: hidden !important;
+}
+
 /* ESPAÇAMENTO DA SEÇÃO DE CONTATO */
 .contact-section {
     padding: 0rem 1.5rem 6rem;
